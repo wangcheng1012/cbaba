@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/red_f27e17"
+        android:padding="3dp"
+        android:text="A" />
+
+    <TextView
+        android:id="@+id/answer_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView1"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="8dp"
+        android:layout_toRightOf="@+id/textView1"
+        android:gravity="left|top"
+        android:text=""
+        android:textColor="@color/hei_515151" />
+
+    <TextView
+        android:id="@+id/answeruser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/answer_item"
+        android:layout_below="@+id/answer_item"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/huise_C8C8C8"
+        android:textSize="15sp"
+        android:text="TextView" />
+
+</RelativeLayout>

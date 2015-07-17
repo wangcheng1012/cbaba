@@ -1,0 +1,4 @@
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/projecttabitem"
+    style="@style/fenlei_style"
+    android:text="@string/pingkaimenchuang" />

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:orientation="vertical" >
+
+    <include layout="@layout/top" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/zhuanjieshao_img" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="介绍朋友  下单折上折" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="6.13"
+        android:text="手机天猫范儿神晒单大PK，，4月18日至4月27日，每天
+10点开始，晒单最高拿10万积分，当评委评选优质晒单，
+1000万天猫积分任性送，最高奖励1万积分，还等什么，
+现在就来参与吧！
+
+当评委评选晒单拿天猫积分
+4月18日-4月27日，每天10点开始，评选优质晒单，
+1000万天猫积分任性送。坚持每日评选50组，有机会获
+得神点赞手大奖，奖励1万积分，共10个名额，最火爆的
+决赛将在4月27日进行
+
+晒单入选PK赛有机会拿积分大奖
+4月17日-4月26日，发布带有“添加商品”，含对商品
+的描述，图片清晰的晒单，总决赛PK值排列前100
+2万积分，11-50名1万积分，51-100名5000积分" />
+
+</LinearLayout>

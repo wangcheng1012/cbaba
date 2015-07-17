@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/wenti"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="10dp"
+        android:text="二二"
+        android:textColor="@color/black" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp" >
+
+        <ImageView
+            android:id="@+id/tiwenpic"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:src="@drawable/suoyuetu" />
+
+        <TextView
+            android:id="@+id/answernum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tiwenpic"
+            android:layout_alignParentRight="true"
+            android:text="ee"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/wentisatte"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/answernum"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
+            android:text="sta"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/wentisatte"
+            android:layout_alignRight="@+id/wentisatte"
+            android:layout_marginBottom="10dp"
+            android:text="3333"
+            android:textColor="@color/hei_515151" />
+    </RelativeLayout>
+
+</LinearLayout>

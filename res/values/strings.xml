@@ -1,0 +1,38 @@
+<resources>
+
+    <item name="tag_first" type="id"></item>
+
+    <string name="app_name">窗爸爸</string>
+    <string name="loading_lijitiyan">立即体验</string>
+    <string name="home">首页</string>
+    <string name="fenlei">分类</string>
+    <string name="dailishang">代理商</string>
+    <string name="my">我的</string>
+    <string name="more">更多</string>
+    <string name="tiantiantejia">天天特价</string>
+    <string name="tuijianshangpin">推荐商品</string>
+    <string name="shangpinleibie">商品类别：</string>
+    <string name="zhuanmaidian">专卖店</string>
+    <string name="menchuangzhanshi">门窗展示</string>
+    <string name="mendianchaxun">门店查询</string>
+    <string name="dingdan">订单</string>
+    <string name="wenda">问答</string>
+    <string name="tuilamenchuang">推拉门窗</string>
+    <string name="pingkaimenchuang">平开门窗</string>
+    <string name="langan">栏杆</string>
+    <string name="yangguangfang">阳光房</string>
+    <string name="haohuayishumen">豪华艺术门</string>
+    <string name="liujiaoting">六角亭</string>
+    <string name="putaojia">葡萄架</string>
+    <string name="lvhejin">铝合金型材</string>
+    <string name="tuijian">推荐</string>
+    <string name="set">设置</string>
+    <string name="about">关于</string>
+    <string name="htmlFormattedText">
+<![CDATA[
+      Text with markup for [b]bold[/b]
+      and [i]italic[/i] text.
+      ]]>
+    </string>
+    
+</resources>

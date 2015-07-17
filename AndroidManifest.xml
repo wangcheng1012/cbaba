@@ -1,0 +1,232 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.wlj.chuangbaba"
+    android:versionCode="2"
+    android:versionName="1.9" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="14" />
+
+    <uses-permission android:name="android.permission.RESTART_PACKAGES" />
+<!--     <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE" /> -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />	
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_GPS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <!-- SDK1.5需要android.permission.GET_TASKS权限判断本程序是否为当前运行的应用? -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <!-- 来电消音 -->
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- 拍照 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+	<!-- 导航新加 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCES_MOCK_LOCATION" />
+
+<!--允许应用读取低级别的系统日志文件 -->
+<uses-permission android:name="android.permission.READ_LOGS"></uses-permission>
+    
+    <application
+        android:name="com.wlj.chuangbaba.ChuangBaBaContext"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="w2v3gu0jvujM5oUSwZsWRLng" />
+
+        <activity
+            android:name="com.wlj.chuangbaba.AppStart"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.wlj.chuangbaba.activity.Login"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wlj.chuangbaba.activity.Main"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wlj.chuangbaba.activity.FenLei"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wlj.chuangbaba.activity.MyMap"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wlj.chuangbaba.activity.projectxiangqing.FenLei_xiangqing"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wlj.chuangbaba.activity.dailishang.DaiLiShang"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wlj.chuangbaba.activity.dailishang.DaiLiShang_GuanLi"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wlj.chuangbaba.activity.dailishang.GuanLi_1_JiBenXinXi"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wlj.chuangbaba.activity.dailishang.GuanLi_2_HeTongUpLoad"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wlj.chuangbaba.activity.dailishang.GuanLi_3_ChuangYiFaBu"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wlj.chuangbaba.activity.dailishang.GuanLi_4_HuiFuWenTi"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wlj.chuangbaba.activity.dailishang.GuanLi_5_HuiFuPingLu"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wlj.chuangbaba.activity.dailishang.GuanLi_6_YuYueXinXi"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wlj.chuangbaba.activity.dailishang.GuanLi_7_HeTongBianHao"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wlj.chuangbaba.activity.dailishang.GuanLi_8_MyChuangYi"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wlj.chuangbaba.activity.dailishang.GuanLi_9_RongYuDu"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wlj.chuangbaba.activity.dailishang.GuanLi_91_MyZhangHu"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wlj.chuangbaba.activity.personal.HuiYuanLogin"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wlj.chuangbaba.activity.personal.Personal_Center"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wlj.chuangbaba.activity.personal.OrderActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.wlj.chuangbaba.activity.personal.JiFenActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.wlj.chuangbaba.activity.personal.ShouCangActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.wlj.chuangbaba.activity.personal.MyTiWenActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.wlj.chuangbaba.activity.wenda.WenDa"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.wlj.chuangbaba.activity.wenda.WenDa_xiangqing"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.wlj.chuangbaba.activity.wenda.WenDa_fawen"
+             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.wlj.chuangbaba.activity.ReMenZhiXun"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.wlj.chuangbaba.activity.ReMenZhiXun_XiangQing"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.wlj.chuangbaba.activity.HongBao"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.wlj.chuangbaba.activity.personal.HongBao_My"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.wlj.chuangbaba.activity.JieShaoPengYou"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.dady.yoyo.activity.DeclarationActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.dady.yoyo.activity.DetailActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.dady.yoyo.activity.HotActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.wlj.chuangbaba.activity.ZhuanMaiDian"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <!-- alipay sdk begin -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" >
+        </activity>
+        <activity 
+            android:name="com.alipay.sdk.pay.PayDemoActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="portrait">
+        </activity>
+        <!-- alipay sdk end -->
+        <activity 
+            android:name="com.baidu.navi.sdkdemo.BNavigatorActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="portrait">
+        </activity>
+        
+        
+        
+          <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" >
+        </service>
+    </application>
+
+</manifest>

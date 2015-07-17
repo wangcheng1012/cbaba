@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:innerRadius="1dp"
+    android:innerRadiusRatio="1"
+    android:shape="ring"
+ 	android:thickness="0dp"    
+    android:thicknessRatio="2"
+    android:useLevel="false" >
+
+    <!--
+     inner Radius 内半径
+     thickness  厚度
+     Ratio 		比率
+     -->
+    <stroke
+        android:width="1dp"
+        android:color="@color/red_f27e17" />
+
+    <solid android:color="@color/red_f27e17" />
+
+</shape>

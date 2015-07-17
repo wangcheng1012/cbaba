@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentBottom="true"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/include1"
+        layout="@layout/top" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/huise_F2F2F2"
+        android:text="" />
+	<RelativeLayout
+        android:id="@+id/framelay_center"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:background="@color/white" >
+    </RelativeLayout>
+<!--     <com.wlj.widget.PullToRefreshListView -->
+<!--         android:id="@+id/pullToRefreshListView" -->
+<!--         android:divider="@color/huise_F2F2F2" -->
+<!--         android:dividerHeight="10dp" -->
+<!--         android:layout_width="match_parent" -->
+<!--         android:layout_height="match_parent" > -->
+<!--     </com.wlj.widget.PullToRefreshListView> -->
+
+</LinearLayout>
