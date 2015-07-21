@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ExpandableListView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/expandable_list_view"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:cacheColorHint="#00000000"
+    android:dividerHeight="1.0dip"
+    android:drawSelectorOnTop="false"
+    android:background="@android:color/white" 
+    android:groupIndicator="@null" >
+
+    <!-- android:groupIndicator="@null" 不要前面的自带折叠打开图片 -->
+
+</ExpandableListView>
