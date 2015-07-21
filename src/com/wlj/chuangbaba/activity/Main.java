@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
@@ -116,7 +117,7 @@ public class Main extends BaseFragmentActivity implements OnClickListener,
 				}
 				BaseList baselist = (BaseList) obj;
 				List<Base> zmdlist = baselist.getBaselist();
-				
+			
 				gridview1_tj.setAdapter(new CommonAdapter<Base>(mContext, zmdlist,R.layout.item_zhuanmaidian) {
 					@Override
 					public View getListItemview(ViewHolder viewHolder, View view,
@@ -134,6 +135,18 @@ public class Main extends BaseFragmentActivity implements OnClickListener,
 						}
 						view.setTag(R.id.tag_first, zhuanMaiDian);
 						return null;
+					}
+				});
+				
+				gridview1_tj.setOnItemClickListener(new OnItemClickListener() {
+
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long id) {
+						Intent intent2 = new Intent(mContext,MyMap.class);
+						intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						intent2.putExtra("DaiLiShangDian", (DaiLiShangDian)view.getTag(R.id.tag_first));
+						startActivity(intent2);
 					}
 				});
 				

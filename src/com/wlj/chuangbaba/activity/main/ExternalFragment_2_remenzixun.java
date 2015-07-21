@@ -4,6 +4,7 @@ import com.dady.yoyo.activity.DeclarationActivity;
 import com.dady.yoyo.activity.HotActivity;
 import com.wlj.chuangbaba.MyBaseFragmentActivity;
 import com.wlj.chuangbaba.R;
+import com.wlj.chuangbaba.activity.lvcailingshou.LvCaiLingShou;
 import com.wlj.chuangbaba.web.MsgContext;
 import com.wlj.ui.BaseFragment;
 import com.wlj.util.Log;
@@ -78,6 +79,11 @@ public class ExternalFragment_2_remenzixun  extends BaseFragment implements OnCl
 				startActivity(remenzhixun);
 				break;
 			case R.id.hangyedongxiang:
+				//铝材零售
+				Intent lvCaiLingShou = new Intent(getActivity(),LvCaiLingShou.class);
+				lvCaiLingShou.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(lvCaiLingShou);
+				
 				break;
 			case R.id.chuangbaba:
 				Intent chuangbaba = new Intent(getActivity(),

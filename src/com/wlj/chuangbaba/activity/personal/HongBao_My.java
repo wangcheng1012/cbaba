@@ -48,8 +48,7 @@ public class HongBao_My extends MyBaseMoreFragmentActivity implements
 
 	@Override
 	protected void rightOnClick() {
-		Intent right = new Intent(getApplicationContext(),
-				Personal_Center.class);
+		Intent right = new Intent(getApplicationContext(),Personal_Center.class);
 		right.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(right);
 	}

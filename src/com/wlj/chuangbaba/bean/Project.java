@@ -28,7 +28,6 @@ import com.wlj.util.ExecutorServices;
  */
 public class Project extends Base {
 
-	private	List<String> ShowpMenChuang = Arrays.asList("推拉门窗系列","平开门窗系列","铝木复合门窗系列");
 	/**
 	 * 
 	 */
@@ -41,6 +40,11 @@ public class Project extends Base {
 	 * 型号
 	 */
 	private String xinghao;
+	/**
+	 * 是否为门窗复选
+	 */
+	private boolean ismenchuang;
+	
 	/**
 	 * 厂家
 	 */
@@ -240,14 +244,13 @@ public class Project extends Base {
 	public void setPingpingpai(String pingpingpai) {
 		this.pingpingpai = pingpingpai;
 	}
+	
+	public boolean isIsmenchuang() {
+		return ismenchuang;
+	}
 
-	public boolean isShowpMenChuang(){
-		
-		if(ShowpMenChuang.contains(xinghao)){
-			
-			return true;
-		}
-		return false;
+	public void setIsmenchuang(boolean ismenchuang) {
+		this.ismenchuang = ismenchuang;
 	}
 	
 	public void getThisfromid(final AppContext mContext, final Handler handle){
@@ -281,6 +284,7 @@ public class Project extends Base {
 		project.setXinghao(RequestWebClient.getJsonString(tmp, "xinghao"));
 		project.setChangjia(RequestWebClient.getJsonString(tmp, "changjia"));
 		project.setPingpingpai(tmp.optString("pingpingpai"));
+		project.setIsmenchuang(tmp.optBoolean("ismenchuang", false));
 		// 规格
 		project.setCankaoPrice(RequestWebClient.getJsonString(tmp, "priceFen"));
 		

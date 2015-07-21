@@ -193,13 +193,15 @@
 
             <ImageView
                 android:id="@+id/dialog_pic"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignRight="@+id/textView1"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
                 android:layout_below="@+id/dialog_address"
                 android:layout_marginTop="10dp"
                 android:adjustViewBounds="true"
                 android:src="@drawable/dailishangguanli" />
+<!--                 android:scaleType="fitXY" -->
 
         </RelativeLayout>
     </ScrollView>

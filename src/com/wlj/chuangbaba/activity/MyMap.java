@@ -448,11 +448,15 @@ public class MyMap extends BaseFragmentActivity implements
 					if (!mContext.isOPen()) {
 						return;
 					}
-					
+					int uid = 	daiLiShangDian.getUid();
+					if(uid == 0){
+						UIHelper.dialog(this, "位置信息有误", null, null);
+						return;
+					}
 					DetailSearchInfo info = new DetailSearchInfo();
 					info.ak = "3EQkyVB7qqRGAehd7uTmDKUT";
 					info.geoTableId = 103236;
-					info.uid = daiLiShangDian.getUid();
+					info.uid = uid;
 					CloudManager.getInstance().detailSearch(info);
 				}
 				
@@ -476,9 +480,10 @@ public class MyMap extends BaseFragmentActivity implements
 		((TextView) map_dialog.findViewById(R.id.dialog_tel)).setText(info.extras.get("tel") + "");
 
 		((TextView) map_dialog.findViewById(R.id.comehere)).setTag(info);
-
+		ImageView dialog_pic = (ImageView)map_dialog.findViewById(R.id.dialog_pic);
+		dialog_pic.setVisibility(View.INVISIBLE);
 		LoadImage loadImage = LoadImage.getinstall();
-		loadImage.addTask(URLs.HOST + info.extras.get("pic"),(ImageView) map_dialog.findViewById(R.id.dialog_pic));
+		loadImage.addTask(URLs.HOST + info.extras.get("picname"),dialog_pic);
 		loadImage.doTask();
 
 		map_dialog.setVisibility(View.VISIBLE);
@@ -491,6 +496,21 @@ public class MyMap extends BaseFragmentActivity implements
 		if (result != null) {
 			if (result.poiInfo != null) {
 				Toast.makeText(this, result.poiInfo.title, Toast.LENGTH_SHORT).show();
+				CloudPoiInfo info =  result.poiInfo;
+				
+				((TextView) map_dialog.findViewById(R.id.dialog_title)).setText(info.title);
+				((TextView) map_dialog.findViewById(R.id.dialog_title)).setTag(info.extras.get("businessid") + "");
+				((TextView) map_dialog.findViewById(R.id.dialog_address)).setText(info.address);
+				((TextView) map_dialog.findViewById(R.id.dialog_tel)).setText(info.extras.get("tel") + "");
+
+				((TextView) map_dialog.findViewById(R.id.comehere)).setTag(info);
+
+				LoadImage loadImage = LoadImage.getinstall();
+				loadImage.addTask(URLs.HOST + info.extras.get("picname"),(ImageView) map_dialog.findViewById(R.id.dialog_pic));
+				loadImage.doTask();
+
+				map_dialog.setVisibility(View.VISIBLE);
+				
 				
 				
 			} else {

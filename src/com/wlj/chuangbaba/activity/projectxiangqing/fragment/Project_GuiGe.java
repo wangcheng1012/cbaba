@@ -132,7 +132,7 @@ public class Project_GuiGe extends BaseFragment implements OnClickListener {
 		guige_696.setOnClickListener(new GuiGeOnClick(guige,"guige"));
 		guige_6126.setOnClickListener(new GuiGeOnClick(guige,"guige"));
 		
-		if(project.isShowpMenChuang()){
+		if(project.isIsmenchuang()){
 			//门窗
 			menchuang_chuang = (TextView) view.findViewById(R.id.menchuang_chuang);
 			menchuang_men = (TextView) view.findViewById(R.id.menchuang_men);
@@ -307,7 +307,7 @@ public class Project_GuiGe extends BaseFragment implements OnClickListener {
 		if (!StringUtils.isnull(caizhi)
 				&& !StringUtils.isnull(guige)
 				&& !StringUtils.isnull(color)
-				&& (project.isShowpMenChuang() ? !StringUtils.isnull(menchuang) : true)) {
+				&& (project.isIsmenchuang() ? !StringUtils.isnull(menchuang) : true)) {
 
 			ExecutorServices.getExecutorService().execute(new Runnable() {
 
@@ -320,7 +320,7 @@ public class Project_GuiGe extends BaseFragment implements OnClickListener {
 					map.put("biaomian", color);
 					map.put("guige", guige);
 					map.put("caizhi", caizhi);
-					if(project.isShowpMenChuang()){
+					if(project.isIsmenchuang()){
 						map.put("fangdaoshachuang", menchuang.trim());
 					}
 					Message message = new Message();
