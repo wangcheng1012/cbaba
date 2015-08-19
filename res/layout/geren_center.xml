@@ -12,8 +12,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/dailishang_inc"
-        android:layout_marginBottom="@dimen/title_height" >
+        android:layout_below="@+id/dailishang_inc" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,7 +26,7 @@
                 android:adjustViewBounds="true"
                 android:background="@color/danhei_FAFAFA"
                 android:paddingBottom="10dp"
-                android:src="@drawable/dailishangguanli" />
+                android:src="@drawable/person_center" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -42,6 +41,7 @@
                     android:text="姓名：" />
 
                 <TextView
+                    android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -59,6 +59,7 @@
                     android:text="联系电话：" />
 
                 <TextView
+                    android:id="@+id/phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -76,6 +77,7 @@
                     android:text="归属地：" />
 
                 <TextView
+                    android:id="@+id/addr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -93,9 +95,32 @@
                     android:text="等级：" />
 
                 <TextView
+                    android:id="@+id/dengji"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/Personal_changeziliao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="@color/white"
+                android:padding="10dp" >
+
+                <TextView
+                    style="@style/dailishangguanli_style"
+                    android:drawableLeft="@drawable/rentou"
+                    android:text="更改基本信息" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="25dp"
+                    android:src="@drawable/right_jiantou" />
+            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/Personal_dingdan"
@@ -165,6 +190,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/personal_hongbao"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
@@ -228,85 +254,30 @@
                     android:src="@drawable/right_jiantou" />
             </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:background="@color/white"
-                android:padding="10dp" >
+            <!-- <RelativeLayout -->
+            <!-- android:layout_width="match_parent" -->
+            <!-- android:layout_height="wrap_content" -->
+            <!-- android:layout_marginTop="2dp" -->
+            <!-- android:background="@color/white" -->
+            <!-- android:padding="10dp" > -->
 
-                <TextView
-                    style="@style/dailishangguanli_style"
-                    android:drawableLeft="@drawable/pingjia_16"
-                    android:text="我的评价" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="25dp"
-                    android:src="@drawable/right_jiantou" />
-            </RelativeLayout>
+            <!-- <TextView -->
+            <!-- style="@style/dailishangguanli_style" -->
+            <!-- android:drawableLeft="@drawable/pingjia_16" -->
+            <!-- android:text="我的评价" /> -->
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="20dp" />
+
+            <!-- <ImageView -->
+            <!-- android:layout_width="wrap_content" -->
+            <!-- android:layout_height="wrap_content" -->
+            <!-- android:layout_alignParentRight="true" -->
+            <!-- android:layout_centerVertical="true" -->
+            <!-- android:layout_marginRight="25dp" -->
+            <!-- android:src="@drawable/right_jiantou" /> -->
+            <!-- </RelativeLayout> -->
+
         </LinearLayout>
     </ScrollView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical" >
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="#E8E8E8" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:orientation="horizontal" >
-
-            <TextView
-                style="@style/bottomtext"
-                android:drawableTop="@drawable/home_fei"
-                android:text="@string/home" />
-
-            <View
-                android:layout_width="0.5dp"
-                android:layout_height="match_parent"
-                android:background="#E8E8E8" />
-
-            <TextView
-                style="@style/bottomtext"
-                android:drawableTop="@drawable/tuijian"
-                android:text="@string/tuijian" />
-
-            <View
-                android:layout_width="0.5dp"
-                android:layout_height="match_parent"
-                android:background="#E8E8E8" />
-
-            <TextView
-                style="@style/bottomtext"
-                android:drawableTop="@drawable/set"
-                android:text="@string/set" />
-
-            <View
-                android:layout_width="0.5dp"
-                android:layout_height="match_parent"
-                android:background="#E8E8E8" />
-
-            <TextView
-                style="@style/bottomtext"
-                android:drawableTop="@drawable/about"
-                android:text="@string/about" />
-        </LinearLayout>
-    </LinearLayout>
 
 </RelativeLayout>

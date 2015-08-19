@@ -128,7 +128,7 @@ public class Project_GuiGe extends BaseFragment implements OnClickListener {
 		guige.add(guige_595);
 		guige.add(guige_696);
 		guige.add(guige_6126);
-		guige_595.setOnClickListener(new GuiGeOnClick(guige,".guige"));
+		guige_595.setOnClickListener(new GuiGeOnClick(guige,"guige"));
 		guige_696.setOnClickListener(new GuiGeOnClick(guige,"guige"));
 		guige_6126.setOnClickListener(new GuiGeOnClick(guige,"guige"));
 		
@@ -190,7 +190,7 @@ public class Project_GuiGe extends BaseFragment implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.fujinmendian:
-			Intent intent = new Intent(mContext, Map.class);
+			Intent intent = new Intent(mContext, MyMap.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 			break;
@@ -206,7 +206,7 @@ public class Project_GuiGe extends BaseFragment implements OnClickListener {
 						map.put("user_Type", User.type_huiyuan);
 						map.put("url", URLs.shoucang);
 						
-						((ChuangBaBaContext)mContext).Request(map,null);
+						((ChuangBaBaContext)mContext).Request(getActivity(),map,null);
 						obtain.what = 2;
 					} catch (Exception e) {
 						obtain.what = -1;
@@ -232,7 +232,7 @@ public class Project_GuiGe extends BaseFragment implements OnClickListener {
 						map.put("user_Type", User.type_huiyuan);
 						map.put("url", URLs.createOrder);
 						
-						((ChuangBaBaContext)mContext).Request(map,null);
+						((ChuangBaBaContext)mContext).Request(getActivity(),map,null);
 						obtain.what = 3;
 					} catch (Exception e) {
 						obtain.what = -1;
@@ -340,4 +340,5 @@ public class Project_GuiGe extends BaseFragment implements OnClickListener {
 		}
 
 	}
+
 }

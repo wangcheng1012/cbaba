@@ -45,6 +45,7 @@
 
     <fragment
         android:id="@+id/wenda_Fragment"
+        android:tag="wenda_Fragment"
         android:name="com.wlj.chuangbaba.activity.wenda.fragment.WenDa_Fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

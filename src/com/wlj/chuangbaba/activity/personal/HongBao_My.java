@@ -9,6 +9,8 @@ import android.view.View.OnClickListener;
 
 import com.wlj.chuangbaba.MyBaseMoreFragmentActivity;
 import com.wlj.chuangbaba.R;
+import com.wlj.chuangbaba.activity.personal.fragment.hongbao;
+import com.wlj.chuangbaba.bean.DaiJinQuan;
 
 public class HongBao_My extends MyBaseMoreFragmentActivity implements
 		OnClickListener {
@@ -19,7 +21,10 @@ public class HongBao_My extends MyBaseMoreFragmentActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		
+		View unuse = findViewById(R.id.unuse);
+		unuse.setOnClickListener(this);
+		unuse.performClick();
 	}
 
 	@Override
@@ -34,7 +39,7 @@ public class HongBao_My extends MyBaseMoreFragmentActivity implements
 
 	@Override
 	protected void initView() {
-		findViewById(R.id.unuse).setOnClickListener(this);
+		
 		findViewById(R.id.overdue).setOnClickListener(this);
 	}
 
@@ -70,14 +75,24 @@ public class HongBao_My extends MyBaseMoreFragmentActivity implements
 			if(oldposition != 0 ){
 				movecursor(0);
 				if (unUseFragment == null) {
-					
+					unUseFragment = new hongbao();
+					Bundle bundle = new Bundle();
+					bundle.putInt("state", DaiJinQuan.daijinquan_state_nomal);
+					unUseFragment.setArguments(bundle);
 				}
 				changeFragment(unUseFragment,0);
 			}
 			break;
 		case R.id.overdue:
-			if (overdueFragment == null) {
-
+			if(oldposition != 1 ){
+				movecursor(1);
+				if (overdueFragment == null) {
+					overdueFragment = new hongbao();
+					Bundle bundle = new Bundle();
+					bundle.putInt("state", DaiJinQuan.daijinquan_state_yiguoqi);
+					overdueFragment.setArguments(bundle);
+				}
+				changeFragment(overdueFragment,1);
 			}
 			break;
 		}

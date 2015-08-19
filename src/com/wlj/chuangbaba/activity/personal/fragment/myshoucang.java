@@ -2,6 +2,7 @@ package com.wlj.chuangbaba.activity.personal.fragment;
 
 import static com.wlj.chuangbaba.web.MsgContext.key_page;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,12 +34,20 @@ import com.wlj.chuangbaba.bean.ProjectShouCang;
 import com.wlj.chuangbaba.bean.User;
 import com.wlj.ui.BaseRefreshFragment;
 import com.wlj.util.ExecutorServices;
+import com.wlj.util.MathUtil;
 import com.wlj.util.UIHelper;
 import com.wlj.util.img.LoadImage;
 import com.wlj.web.URLs;
 
 public class myshoucang extends BaseRefreshFragment  {
 
+	private DecimalFormat df;
+	@Override
+	public void onResume() {
+		super.onResume();
+		
+		df = new DecimalFormat("0.00");
+	}
 	@Override
 	public void initCommonAdapter(List<Base> listDate2) {
 		
@@ -59,7 +68,7 @@ public class myshoucang extends BaseRefreshFragment  {
 				viewHolder.setText(R.id.projectOrder, project.getPingpingpai());
 				viewHolder.setText(R.id.projectName, project.getName());
 				viewHolder.setText(R.id.projectType, project.getXinghao());
-				viewHolder.setText(R.id.cankaoprice, project.getCankaoPrice());
+				viewHolder.setText(R.id.cankaoprice, df.format(MathUtil.parseDouble(project.getCankaoPrice())/100)+"元/㎡");
 				
 				view.findViewById(R.id.joinorder).setOnClickListener(new OnClickListener() {
 					@Override
@@ -81,7 +90,7 @@ public class myshoucang extends BaseRefreshFragment  {
 									map.put("user_Type", User.type_huiyuan);
 									map.put("url", URLs.createOrder);
 									
-									obtain.obj = ((ChuangBaBaContext)mContext).Request(map,null);
+									obtain.obj = ((ChuangBaBaContext)mContext).Request(getActivity(),map,null);
 									obtain.what = 3;
 								} catch (Exception e) {
 									obtain.what = -1;
@@ -135,7 +144,7 @@ public class myshoucang extends BaseRefreshFragment  {
 					HashMap<String, Object> hashMap = new HashMap<String, Object>();
 					hashMap.put("pubId", tag.getProject().getId());
 					hashMap.put("url", URLs.shoucang_remove);
-					obtain.obj =  ((ChuangBaBaContext)mContext).Request(hashMap,null);
+					obtain.obj =  ((ChuangBaBaContext)mContext).Request(getActivity(),hashMap,null);
 					obtain.what = 1;
 				} catch (Exception e) {
 					obtain.what = -1;
@@ -181,7 +190,7 @@ public class myshoucang extends BaseRefreshFragment  {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put(key_page, pageIndex2+"");
 		map.put("url", URLs.shoucangList);
-		return ((ChuangBaBaContext)mContext).getHaveCacheBaseList( new ProjectShouCang(),map,isRefresh);
+		return ((ChuangBaBaContext)mContext).getHaveCacheBaseList(getActivity(),new ProjectShouCang(),map,isRefresh);
 	}
 
 }

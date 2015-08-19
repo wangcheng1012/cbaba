@@ -2,6 +2,7 @@ package com.wlj.chuangbaba.activity;
 
 import static com.wlj.chuangbaba.web.MsgContext.key_page;
 import static com.wlj.chuangbaba.web.MsgContext.key_pageSize;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,24 +17,23 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.CheckedTextView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.wlj.adapter.CommonAdapter;
 import com.wlj.adapter.ViewHolder;
 import com.wlj.bean.Base;
@@ -43,28 +43,29 @@ import com.wlj.chuangbaba.R;
 import com.wlj.chuangbaba.activity.dailishang.DaiLiShang;
 import com.wlj.chuangbaba.activity.dailishang.DaiLiShang_GuanLi;
 import com.wlj.chuangbaba.activity.main.ProjectClick;
-import com.wlj.chuangbaba.activity.personal.HuiYuanLogin;
 import com.wlj.chuangbaba.activity.personal.OrderActivity;
 import com.wlj.chuangbaba.activity.personal.Personal_Center;
 import com.wlj.chuangbaba.activity.wenda.WenDa;
 import com.wlj.chuangbaba.bean.Banner;
 import com.wlj.chuangbaba.bean.DaiLiShangDian;
+import com.wlj.chuangbaba.bean.IndexCity;
 import com.wlj.chuangbaba.bean.Project;
 import com.wlj.chuangbaba.bean.ProjectTab;
 import com.wlj.chuangbaba.bean.User;
 import com.wlj.chuangbaba.web.MsgContext;
 import com.wlj.ob.ObserversImageView;
 import com.wlj.ui.BaseFragmentActivity;
+import com.wlj.util.AppConfig;
 import com.wlj.util.AppException;
 import com.wlj.util.DpAndPx;
 import com.wlj.util.ExecutorServices;
 import com.wlj.util.GetResourceImage;
+import com.wlj.util.Log;
 import com.wlj.util.UIHelper;
-import com.wlj.util.img.BitmapCache;
 import com.wlj.util.img.LoadImage;
+import com.wlj.util.img2.ImageLrucache;
 import com.wlj.web.URLs;
 import com.wlj.widget.AutoScrollViewPager;
-import com.wlj.widget.MyScrollLayout;
 import com.wlj.widget.SwitchViewPagerDemoActivity;
 
 /**
@@ -74,7 +75,7 @@ import com.wlj.widget.SwitchViewPagerDemoActivity;
  * 
  */
 public class Main extends BaseFragmentActivity implements OnClickListener,
-		OnItemSelectedListener {
+		 BDLocationListener {
 
 	private ImageView menchuangzhanshi, mendianchaxun, dingdan, dailishang,
 			wenda, hongbao, jieshaopengyou;
@@ -84,39 +85,89 @@ public class Main extends BaseFragmentActivity implements OnClickListener,
 	private ObserversImageView tj_120, tj_80, tj_80_2, tj_65;
 	private ImageView tuijianMore;
 	private GridView gridview1_tj;
+	private CharSequence city;
+	private List<Base> zmdlist1;
+	private TextView left;
 	
 	@SuppressLint("HandlerLeak")
 	public Handler handle = new Handler() {
 
 		@SuppressWarnings("unchecked")
 		public void handleMessage(android.os.Message msg) {
+			Object obj = msg.obj;
+			if (obj == null) {
+				return;
+			}
+			
 			switch (msg.what) {
 			case -1:
-				Exception e = (Exception) msg.obj;
+				Exception e = (Exception) obj;
 				UIHelper.ToastMessage(mContext, e.getMessage());
 				break;
 			case 0:
-				Map<String, List<Banner>> list = (Map<String, List<Banner>>) msg.obj;
+				Map<String, List<Banner>> list = (Map<String, List<Banner>>) obj;
 				initBanner(list);
 				break;
 			case 3:
-				List<ProjectTab> ProjectTablist = (List<ProjectTab>) msg.obj;
+				List<ProjectTab> ProjectTablist = (List<ProjectTab>) obj;
 				iniTabView(ProjectTablist);
 				break;
 			case 31:
-				BaseList baselist31 = (BaseList) msg.obj;
+				BaseList baselist31 = (BaseList)obj;
 				ImageView[] ImageViews31 = { tj_120, tj_80, tj_80_2, tj_65 };
 
 				initProject(baselist31, ImageViews31);
 				break;
+			case 41:
+				BaseList baselist1 = (BaseList) obj;
+				zmdlist1 = baselist1.getBaselist();
+				
+				ExecutorServices.getExecutorService().execute(new Runnable() {
+					
+					@Override
+					public void run() {
+						// 推荐-专卖店
+						Message zmdMessage = Message.obtain();
+						try {
+							Map<String,Object> map = new HashMap<String, Object>();
+						        
+							map.put("url", URLs.dailishangList);
+							map.put("bujiami","");
+							
+							map.put("tuijian","yes");
+							map.put("city",city);
+							
+							map.put(key_page,"1");
+							map.put(key_pageSize,"2");
+							
+							zmdMessage.what = 4;
+							zmdMessage.obj =  mContext.Request(Main.this,map, new DaiLiShangDian());
+						} catch (Exception e) {
+							AppException.http(e);
+							zmdMessage.what = -1;
+							zmdMessage.obj = e;
+						}
+						handle.sendMessage(zmdMessage);
+						
+					}
+				});
+				
+				break;
 			case 4:
 				//专卖店      推荐    
-				Object obj = msg.obj;
-				if (obj == null) {
-					return;
-				}
 				BaseList baselist = (BaseList) obj;
 				List<Base> zmdlist = baselist.getBaselist();
+			
+				if(zmdlist.size() > 0 && zmdlist1.size() > 0){
+					
+					String id2= zmdlist.get(0).getId();
+					String id1= zmdlist1.get(0).getId();
+					if(!id1.equals(id2)){
+						
+						zmdlist.addAll(0, zmdlist1);
+					}
+					
+				}
 			
 				gridview1_tj.setAdapter(new CommonAdapter<Base>(mContext, zmdlist,R.layout.item_zhuanmaidian) {
 					@Override
@@ -151,7 +202,19 @@ public class Main extends BaseFragmentActivity implements OnClickListener,
 				});
 				
 				break;
+			case 5:
 				
+				BaseList indexcitybaselist = (BaseList) obj;
+				List<Base> indexcitylist = indexcitybaselist.getBaselist();
+				
+				String[] ic = 	new String[indexcitylist.size()];
+				
+				for (int i = 0; i < indexcitylist.size(); i++) {
+					ic[i] = ((IndexCity)indexcitylist.get(i)).getName();
+				}
+				
+				
+				break;
 			}
 		}
 
@@ -162,19 +225,16 @@ public class Main extends BaseFragmentActivity implements OnClickListener,
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		initDingWei();
 		mContext = (ChuangBaBaContext) getApplication();
-		initTitle();
 		initview();
-
-		ChuangBaBaContext.preferences = getSharedPreferences("user",
-				MODE_WORLD_READABLE);
-		mContext.editor = ChuangBaBaContext.preferences.edit();
+		initTitle();
 	}
 
 	protected void initBanner(Map<String, List<Banner>> map) {
 		Set<String> keySet = map.keySet();
-		for (String string : keySet) {
-			List<Banner> list = map.get(string);
+		for (String s : keySet) {
+			List<Banner> list = map.get(s);
 
 			List<String> arrayList = new ArrayList<String>();
 			for (Banner banner : list) {
@@ -185,7 +245,7 @@ public class Main extends BaseFragmentActivity implements OnClickListener,
 				arrayList.add(picurl);
 			}
 
-			if ("topBanner".equals(string)) {
+			if ("topBanner".equals(s)) {
 
 				View view = new SwitchViewPagerDemoActivity<String>(mContext,
 						arrayList) {
@@ -204,10 +264,9 @@ public class Main extends BaseFragmentActivity implements OnClickListener,
 
 				}.createview();
 				((RelativeLayout) findViewById(R.id.autoscorll)).addView(view);
-			} else if ("tiantiantejia".equals(string)) {
+			} else if ("tiantiantejia".equals(s)) {
 				View view = new SwitchViewPagerDemoActivity<String>(mContext,
 						arrayList) {
-
 					@Override
 					protected void addSwitchPage(
 							AutoScrollViewPager autoviewPager) {
@@ -217,7 +276,7 @@ public class Main extends BaseFragmentActivity implements OnClickListener,
 				}.createview();
 				((RelativeLayout) findViewById(R.id.autoscroll_3))
 						.addView(view);
-			} else if ("tuijianshangpin".equals(string)) {
+			} else if ("tuijianshangpin".equals(s)) {
 				View view = new SwitchViewPagerDemoActivity<String>(mContext,
 						arrayList) {
 					@Override
@@ -243,19 +302,22 @@ public class Main extends BaseFragmentActivity implements OnClickListener,
 		TextView right = (TextView) findViewById(R.id.right);
 		// Drawable drawabler = (BitmapDrawable)GetResourceImage.get(mContext,
 		// R.drawable.rentou_quan_white);
-		Drawable drawabler = getResources().getDrawable(
-				R.drawable.rentou_quan_white);
+		Drawable drawabler = getResources().getDrawable(R.drawable.rentou_quan_white);
 		// / 这一步必须要做,否则不会显示.
 		drawabler.setBounds(0, 0, drawabler.getMinimumWidth(),
 				drawabler.getMinimumHeight());
 		right.setCompoundDrawables(drawabler, null, null, null);
-		// 左
-		Spinner left = (Spinner) findViewById(R.id.left);
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,R.layout.item_textview, R.id.item_text, new String[] { "重庆","成都", "自贡" });
-		adapter.setDropDownViewResource(R.layout.spinner_dropdown);
-		left.setAdapter(adapter);
+		
 		right.setOnClickListener(this);
-		left.setOnItemSelectedListener(this);
+		
+		left = (TextView) findViewById(R.id.left);
+		
+		Drawable drawablerleft = getResources().getDrawable(R.drawable.dingwei);
+		
+		drawablerleft.setBounds(0, 0, drawablerleft.getMinimumWidth(), drawablerleft.getMinimumHeight());
+		
+		left.setCompoundDrawables(drawablerleft, null, null, null);
+		
 		
 	}
 
@@ -274,8 +336,7 @@ public class Main extends BaseFragmentActivity implements OnClickListener,
 					tmp.setImageDrawable(null);
 				}
 				if (i >= baselist2.size()) {
-					tmp.setImageBitmap(BitmapCache.getInstance().getBitmap(
-							R.drawable.project_bg, mContext));
+					tmp.setImageBitmap(ImageLrucache.getInstance().getResourceBitmap(R.drawable.project_bg, mContext));
 					tmp.setTag(null);
 					tmp.setClickable(false);
 				} else {
@@ -289,7 +350,7 @@ public class Main extends BaseFragmentActivity implements OnClickListener,
 					} else {
 						tmp.setClickable(false);
 						tmp.setTag(null);
-						tmp.setImageBitmap(BitmapCache.getInstance().getBitmap(
+						tmp.setImageBitmap(ImageLrucache.getInstance().getResourceBitmap(
 								R.drawable.project_bg, mContext));
 					}
 				}
@@ -300,7 +361,7 @@ public class Main extends BaseFragmentActivity implements OnClickListener,
 	@Override
 	protected void onPause() {
 		super.onPause();
-		BitmapCache.getInstance().clearCache();
+		ImageLrucache.getInstance().clearCache();
 		System.gc();
 		if (topBannner != null) {
 			topBannner.stopAutoScroll();
@@ -478,27 +539,22 @@ public class Main extends BaseFragmentActivity implements OnClickListener,
 				}
 				handle.sendMessage(tabMessage);
 
-				// 推荐-专卖店
-				Message zmdMessage = Message.obtain();
-				try {
-					Map<String,Object> map = new HashMap<String, Object>();
-				        
-					map.put("url", URLs.dailishangList);
-					map.put("bujiami","");
-					
-					map.put("tuijian","yes");
-					map.put(key_page,"1");
-					map.put(key_pageSize,"2");
-					
-					zmdMessage.what = 4;
-					zmdMessage.obj =  mContext.Request(map, new DaiLiShangDian());
-				} catch (Exception e) {
-					AppException.http(e);
-					zmdMessage.what = -1;
-					zmdMessage.obj = e;
-				}
-				handle.sendMessage(zmdMessage);
-				
+//				// 城市选择
+//				Message ICMessage = Message.obtain();
+//				try {
+//					Map<String,Object> map = new HashMap<String, Object>();
+//				        
+//					map.put("url", URLs.indexCity);
+//					map.put("bujiami", true);
+//					
+//					ICMessage.what = 5;
+//					ICMessage.obj =  mContext.Request(Main.this,map, new IndexCity());
+//				} catch (Exception e) {
+//					AppException.http(e);
+//					ICMessage.what = -1;
+//					ICMessage.obj = e;
+//				}
+//				handle.sendMessage(ICMessage);
 				
 			}
 		});
@@ -543,23 +599,15 @@ public class Main extends BaseFragmentActivity implements OnClickListener,
 			startActivity(intent2);
 			break;
 		case R.id.dingdan:
-			Class<?> dingdanclas = null;
-			if (!User.type_huiyuan.equals(ChuangBaBaContext.preferences
-					.getString("type", ""))) {
-				// 登录
-				dingdanclas = HuiYuanLogin.class;
-			} else {
-				dingdanclas = OrderActivity.class;
-			}
-			Intent dingdan = new Intent(getApplicationContext(), dingdanclas);
+			
+			Intent dingdan = new Intent(getApplicationContext(), OrderActivity.class);
 			dingdan.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			dingdan.putExtra("type", OrderActivity.huiyuan);
 			startActivity(dingdan);
 			break;
 		case R.id.dailishang:
 			Class<?> cls = null;
-			if (!User.type_dailishang.equals(ChuangBaBaContext.preferences
-					.getString("type", ""))) {
+			if (!User.type_dailishang.equals(mContext.getProperty(AppConfig.CONF_TYPT))) {
 				// 登录
 				cls = DaiLiShang.class;
 			} else {
@@ -570,15 +618,7 @@ public class Main extends BaseFragmentActivity implements OnClickListener,
 			startActivity(intentdailishang);
 			break;
 		case R.id.wenda:
-			Class<?> clsWenDa = null;
-			if (!User.type_huiyuan.equals(ChuangBaBaContext.preferences
-					.getString("type", ""))) {
-				// 登录
-				clsWenDa = HuiYuanLogin.class;
-			} else {
-				clsWenDa = WenDa.class;
-			}
-			Intent intentwenda = new Intent(getApplicationContext(), clsWenDa);
+			Intent intentwenda = new Intent(getApplicationContext(), WenDa.class);
 			intentwenda.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intentwenda);
 			break;
@@ -607,15 +647,7 @@ public class Main extends BaseFragmentActivity implements OnClickListener,
 			startActivity(home);
 			break;
 		case R.id.my_bottom:
-			Class<?> clas = null;
-			if (!User.type_huiyuan.equals(ChuangBaBaContext.preferences
-					.getString("type", ""))) {
-				// 登录
-				clas = HuiYuanLogin.class;
-			} else {
-				clas = Personal_Center.class;
-			}
-			Intent my_bottom = new Intent(getApplicationContext(), clas);
+			Intent my_bottom = new Intent(getApplicationContext(), Personal_Center.class);
 			my_bottom.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(my_bottom);
 			break;
@@ -632,21 +664,14 @@ public class Main extends BaseFragmentActivity implements OnClickListener,
 			break;
 
 		case R.id.right:
-			Class<?> class1 = null;
-			if (!User.type_huiyuan.equals(ChuangBaBaContext.preferences
-					.getString("type", ""))) {
-				// 登录
-				class1 = HuiYuanLogin.class;
-			} else {
-				class1 = Personal_Center.class;
-			}
-			Intent intenthy = new Intent(mContext, class1);
+			Intent intenthy = new Intent(mContext, Personal_Center.class);
 			intenthy.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intenthy);
 			break;
 
 		case R.id.zhuanmaidian_more:
 			Intent zhuanmaidian1 = new Intent(mContext, ZhuanMaiDian.class);
+			zhuanmaidian1.putExtra("city", city);
 			zhuanmaidian1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(zhuanmaidian1);
 			break;
@@ -684,8 +709,7 @@ public class Main extends BaseFragmentActivity implements OnClickListener,
 						paremeter.put(MsgContext.key_pageSize, "4");
 						Message obtain = Message.obtain();
 						try {
-							BaseList baseList = mContext
-									.getProductListByFenleiId(paremeter, true);
+							BaseList baseList = mContext.getProductListByFenleiId(paremeter, true);
 							obtain.what = 31;
 							obtain.obj = baseList;
 
@@ -702,16 +726,72 @@ public class Main extends BaseFragmentActivity implements OnClickListener,
 		}
 
 	}
+	private LocationClient mLocClient;
+	/**
+	 * 定位初始化
+	 */
+	private void initDingWei() {
 
-	@Override
-	public void onItemSelected(AdapterView<?> parent, View view, int position,
-			long id) {
-		// TODO 首页左上角城市选择
+		// 定位初始化
+		mLocClient = new LocationClient(getApplicationContext());
+		LocationClientOption option = new LocationClientOption();
+		// //Hight_Accuracy高精度、Battery_Saving低功耗、Device_Sensors仅设备(GPS)
+		option.setLocationMode(LocationClientOption.LocationMode.Battery_Saving);// 设置定位模式
+		option.setOpenGps(true);// 打开gps
+		option.setCoorType("bd09ll"); // 返回的定位结果是百度经纬度,默认值gcj02
+		option.setScanSpan(5000);// 设置发起定位请求的间隔时间为5000ms
+		option.setAddrType("all");
+		option.setIsNeedAddress(true);// 返回的定位结果包含地址信息
+		// option.setNeedDeviceDirect(true);//返回的定位结果包含手机机头的方向
+
+		mLocClient.setLocOption(option);
+		mLocClient.registerLocationListener(this);
+		mLocClient.start();
 	}
-
+	
 	@Override
-	public void onNothingSelected(AdapterView<?> parent) {
+	public void onReceiveLocation(BDLocation location) {
+		if (location == null )
+			return;
+		Log.i("main", "位置："+location.getAddrStr());
+		if (location.getLocType() == BDLocation.TypeGpsLocation
+				|| location.getLocType() == BDLocation.TypeNetWorkLocation) {
 
+			city = location.getProvince();
+			// 左
+			left.setText(city);
+			
+			mLocClient.unRegisterLocationListener(this);
+			ExecutorServices.getExecutorService().execute(new Runnable() {
+				@Override
+				public void run() {
+					
+					// 推荐1-专卖店
+					Message zmd1Message = Message.obtain();
+					try {
+						Map<String,Object> map = new HashMap<String, Object>();
+					        
+						map.put("url", URLs.dailishangList);
+						map.put("bujiami","");
+						map.put("tanzikou","true");
+						
+						map.put(key_page,"1");
+						map.put(key_pageSize,"1");
+						
+						zmd1Message.what = 41;
+						zmd1Message.obj =  mContext.Request(Main.this,map, new DaiLiShangDian());
+					} catch (Exception e) {
+						AppException.http(e);
+						zmd1Message.what = -1;
+						zmd1Message.obj = e;
+					}
+					handle.sendMessage(zmd1Message);
+				}
+			});
+		} else {
+			UIHelper.ToastMessage(this, "定位失败（" + location.getLocType() + ")");
+
+		}
 	}
 
 	private long mExitTime;
@@ -725,6 +805,12 @@ public class Main extends BaseFragmentActivity implements OnClickListener,
 		} else {
 			super.onBackPressed();
 		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		mLocClient.unRegisterLocationListener(this);
+		super.onDestroy();
 	}
 
 }

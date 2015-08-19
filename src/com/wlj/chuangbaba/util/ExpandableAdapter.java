@@ -4,7 +4,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import com.wlj.bean.Base;
 import com.wlj.chuangbaba.R;
+import com.wlj.chuangbaba.bean.Group;
+import com.wlj.chuangbaba.bean.Project;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,17 +18,22 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
+/**
+ * 铝材零售
+ * @author wlj
+ *
+ */
 public class ExpandableAdapter extends BaseExpandableListAdapter{
 
-         private LinkedList<Map<String, String>> groupArray;
-         private LinkedList<List<Map<String, String>>> childArray;
+         private LinkedList<Base> groupArray;
+         private LinkedList<List<Base>> childArray;
 //         private Context context;
          private LayoutInflater mInflater;
          private Drawable mIcon1,group_img;
          
-		public ExpandableAdapter(Context context,LinkedList<Map<String, String>> courseGroupList,LinkedList<List<Map<String, String>>> childArray2){
-            
-        	 mInflater = ((Activity) context).getLayoutInflater();
+		public ExpandableAdapter(Context context,LinkedList<Base> courseGroupList,LinkedList<List<Base>> childArray2){
+			mInflater = LayoutInflater.from(context);
+//        	 mInflater = ((Activity) context).getLayoutInflater();
 //             this.context = constext;
              this.groupArray = courseGroupList;
              this.childArray = childArray2;
@@ -43,14 +51,10 @@ public class ExpandableAdapter extends BaseExpandableListAdapter{
         public int getChildrenCount(int groupPosition) {
             if(childArray.size() == 0 )
             	return 0;
-            if(childArray.get(groupPosition).size() == 0 )
-            	return 0;
-            if(childArray.get(groupPosition).get(0).size() == 0 )
-            	return 0;
             return childArray.get(groupPosition).size();
         }
 
-        public Map<String, String> getGroup(int groupPosition) {
+        public Base getGroup(int groupPosition) {
             return groupArray.get(groupPosition);
         }
 
@@ -81,7 +85,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter{
             return getGroupViewStub(getGroup(groupPosition),convertView,groupPosition);
         }
 
-        public View getGroupViewStub(Map<String, String> s,View convertView,int groupPosition) {
+        public View getGroupViewStub(Base s,View convertView,int groupPosition) {
 			// Layout parameters for the ExpandableListView
 //        	ViewGroup.LayoutParams lp = new AbsListView.LayoutParams(
 //					ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -101,8 +105,9 @@ public class ExpandableAdapter extends BaseExpandableListAdapter{
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
-			holder.text.setText(s.get("groupName"));
-			holder.map =  s;
+			Group g = (Group)s;
+			holder.text.setText(g.getName());
+			holder.map =  g;
 			holder.groupPosition = groupPosition;
         	
 			return convertView;
@@ -135,10 +140,11 @@ public class ExpandableAdapter extends BaseExpandableListAdapter{
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
-			String name = childArray.get(groupPosition).get(childPosition).get("remarkName");
+			Project project = (Project)childArray.get(groupPosition).get(childPosition);
+			String name = project.getName();
 			holder.text.setText(name);
 //			holder.icon.setImageBitmap(mIcon1);
-			holder.map =  childArray.get(groupPosition).get(childPosition);
+			holder.map =  project;
 			holder.groupPosition = groupPosition;
 			holder.childPosition = childPosition;
 			
@@ -149,9 +155,9 @@ public class ExpandableAdapter extends BaseExpandableListAdapter{
         
         public class ViewHolder {
     		TextView text;
-    		public TextView tixin;
+//    		public TextView tixin;
     		public int groupPosition;
     		public int childPosition = -1;
-    		public Map<String, String> map;
+    		public Base map;
     	}
     }

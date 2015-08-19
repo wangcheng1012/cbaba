@@ -12,6 +12,9 @@ import android.util.Log;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
+
+import com.wlj.util.img.BitmapUtil;
 
 public class CropHelper {
 
@@ -65,6 +68,27 @@ public class CropHelper {
                         }
                     }
                 case REQUEST_CAMERA:
+                	
+                	if(!handler.getCropParams().isCrop){
+                		if (isPhotoReallyCropped(handler.getCropParams().uri) ) {
+                            Log.d(TAG, "NO Crop Photo");
+                            handler.onPhotoCropped(handler.getCropParams().uri);
+                            break;
+                        }else{
+                            Activity context = handler.getContext();
+                            if (context != null) {
+                                String path = CropFileUtils.getSmartFilePath(context, data.getData());
+                                boolean result = CropFileUtils.copyFile(path, handler.getCropParams().uri.getPath());
+                                if (!result) {
+                                    handler.onCropFailed("Unknown error occurred!");
+                                    break;
+                                }
+                            } else {
+                                handler.onCropFailed("CropHandler's context MUST NOT be null!");
+                            }
+                        }
+                	}
+                	
                     Intent intent = buildCropFromUriIntent(handler.getCropParams());
                     Activity context = handler.getContext();
                     if (context != null) {
@@ -100,16 +124,39 @@ public class CropHelper {
         return false;
     }
 
+    /**
+     * 裁剪
+     * @param params
+     * @return
+     */
     public static Intent buildCropFromUriIntent(CropParams params) {
         return buildCropIntent("com.android.camera.action.CROP", params);
     }
 
+    /**
+     * 带裁剪的相册选择Intent
+     * @param params
+     * @return
+     */
     public static Intent buildCropFromGalleryIntent(CropParams params) {
         return buildCropIntent(Intent.ACTION_GET_CONTENT, params);
     }
-
+    /**
+     *  拍照
+     * @param uri
+     * @return
+     */
     public static Intent buildCaptureIntent(Uri uri) {
         return new Intent(MediaStore.ACTION_IMAGE_CAPTURE).putExtra(MediaStore.EXTRA_OUTPUT, uri);
+    }
+    
+    /**
+     *  相册
+     * @param uri
+     * @return
+     */
+    public static Intent buildGalleryIntent(Uri uri) {
+    	return new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
     }
 
     public static Intent buildCropIntent(String action, CropParams params) {
@@ -134,7 +181,9 @@ public class CropHelper {
 
         Bitmap bitmap;
         try {
-            bitmap = BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri));
+        	InputStream stream = context.getContentResolver().openInputStream(uri);
+        	InputStream stream2 = context.getContentResolver().openInputStream(uri);
+        	 bitmap = BitmapUtil.decodeSampledBitmapFromStream(stream,stream2, CropParams.outputX, CropParams.outputY);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             return null;

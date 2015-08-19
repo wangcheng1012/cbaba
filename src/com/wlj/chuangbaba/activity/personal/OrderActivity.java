@@ -10,10 +10,13 @@ import android.widget.TextView;
 
 import com.wlj.chuangbaba.MyBaseMoreFragmentActivity;
 import com.wlj.chuangbaba.R;
+import com.wlj.chuangbaba.activity.dailishang.DaiLiShang;
 import com.wlj.chuangbaba.activity.dailishang.DaiLiShang_GuanLi;
 import com.wlj.chuangbaba.activity.personal.fragment.Order_AllOrder;
 import com.wlj.chuangbaba.activity.personal.fragment.Order_orderQuery;
 import com.wlj.chuangbaba.bean.Order;
+import com.wlj.chuangbaba.bean.User;
+import com.wlj.util.AppConfig;
 
 public class OrderActivity extends MyBaseMoreFragmentActivity implements OnClickListener  {
 
@@ -21,13 +24,13 @@ public class OrderActivity extends MyBaseMoreFragmentActivity implements OnClick
 	private TextView weiZhiFu; 
 	private TextView yiZhiFu; 
 	private TextView yiComplete; 
-	private TextView orderQuery; 
+//	private TextView orderQuery; 
 	
 	private Fragment personalOrder_AllOrder;
 	private Fragment personalOrder_weiZhiFu;
 	private Fragment personalOrder_yiZhiFu;
 	private Fragment personalOrder_yiComplete;
-	private Fragment personalOrder_orderQuery;
+//	private Fragment personalOrder_orderQuery;
 	
 	public final static int dailishang = 1;
 	public final static int huiyuan = 2;
@@ -36,7 +39,26 @@ public class OrderActivity extends MyBaseMoreFragmentActivity implements OnClick
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 		type = intent.getIntExtra("type", 0);
-		allOrder.performClick();
+		if(type == huiyuan){
+			if(!User.type_huiyuan.equals(mContext.getProperty(AppConfig.CONF_TYPT))){
+				//登录
+				Intent intentwenda = new Intent(getApplicationContext(),HuiYuanLogin.class);
+				intentwenda.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivityForResult(intentwenda,11);
+			}else{
+				allOrder.performClick();
+			}
+		}else if (type == dailishang){
+			if(!User.type_dailishang.equals(mContext.getProperty(AppConfig.CONF_TYPT))){
+				//登录
+				Intent intentwenda = new Intent(getApplicationContext(),DaiLiShang.class);
+				intentwenda.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivityForResult(intentwenda,11);
+			}else{
+				allOrder.performClick();
+			}
+		}
+		
 	}
 
 	@Override
@@ -96,7 +118,7 @@ public class OrderActivity extends MyBaseMoreFragmentActivity implements OnClick
 			}
 			
 			break;
-		case R.id.orderQuery:
+//		case R.id.orderQuery:
 //			if(oldposition != 4){
 //				
 //				movecursor(4);
@@ -107,7 +129,7 @@ public class OrderActivity extends MyBaseMoreFragmentActivity implements OnClick
 //				}
 //				changeFragment(personalOrder_orderQuery,4);
 //			}
-			break;
+//			break;
 		}
 	}
 
@@ -128,13 +150,13 @@ public class OrderActivity extends MyBaseMoreFragmentActivity implements OnClick
 		weiZhiFu = (TextView)findViewById(R.id.weiZhiFu);
 		yiZhiFu = (TextView)findViewById(R.id.yiZhiFu);
 		yiComplete = (TextView)findViewById(R.id.yiComplete);
-		orderQuery = (TextView)findViewById(R.id.orderQuery);
+//		orderQuery = (TextView)findViewById(R.id.orderQuery);
 		
 		allOrder.setOnClickListener(this);
 		weiZhiFu.setOnClickListener(this);
 		yiZhiFu.setOnClickListener(this);
 		yiComplete.setOnClickListener(this);
-		orderQuery.setOnClickListener(this);		
+//		orderQuery.setOnClickListener(this);		
 	}
 
 	@Override
@@ -166,6 +188,19 @@ public class OrderActivity extends MyBaseMoreFragmentActivity implements OnClick
 	@Override
 	protected Object callWebMethod() throws Exception {
 		return null;
+	}
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		if( resultCode == 22){
+			// esultCode == 22 没登录
+			
+			finish();
+		}else{
+			allOrder.performClick();
+		}
+		
 	}
 	
 }

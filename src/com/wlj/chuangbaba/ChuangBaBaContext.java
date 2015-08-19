@@ -15,6 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.app.PendingIntent.CanceledException;
 import android.content.Context;
@@ -23,10 +24,13 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Bundle;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.wlj.bean.Base;
 import com.wlj.bean.BaseList;
+import com.wlj.chuangbaba.activity.dailishang.DaiLiShang;
+import com.wlj.chuangbaba.activity.personal.HuiYuanLogin;
 import com.wlj.chuangbaba.bean.Banner;
 import com.wlj.chuangbaba.bean.HeTong;
 import com.wlj.chuangbaba.bean.Order;
@@ -40,6 +44,7 @@ import com.wlj.chuangbaba.web.HttpGet;
 import com.wlj.chuangbaba.web.HttpPost;
 import com.wlj.chuangbaba.web.MsgContext;
 import com.wlj.chuangbaba.web.RequestWebClient;
+import com.wlj.util.AppConfig;
 import com.wlj.util.AppContext;
 import com.wlj.util.AppException;
 import com.wlj.util.Log;
@@ -49,12 +54,11 @@ import com.wlj.util.UIHelper;
 import com.wlj.web.URLs;
 
 public class ChuangBaBaContext extends AppContext {
-	public static SharedPreferences preferences;
-	public Editor editor;
 	
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		SDKInitializer.initialize(getApplicationContext());
 	}
 
 	public boolean GPSisOpen() {
@@ -121,11 +125,9 @@ public class ChuangBaBaContext extends AppContext {
 
 				if (user != null) {
 					user.setName(u.getName());
-					editor.putString("type", user.getType());
-					editor.putString("name", user.getName());
-//					editor.putString("realname", user.getRealname());
-					editor.putString("key", user.getKey());
-					editor.commit();
+					setProperty(AppConfig.CONF_NAME, user.getName());
+					setProperty(AppConfig.CONF_TYPT, user.getType());
+					setProperty(AppConfig.CONF_KEY, user.getKey());
 					return true;
 				}
 			} catch (AppException e) {
@@ -136,20 +138,18 @@ public class ChuangBaBaContext extends AppContext {
 	}
 
 	public void loginOut() {
-		editor.putString("type", "");
-		editor.putString("name", "");
-//		editor.putString("realname", "");
-		editor.putString("key", "");
-		editor.commit();
+		setProperty(AppConfig.CONF_NAME, "");
+		setProperty(AppConfig.CONF_TYPT, "");
+		setProperty(AppConfig.CONF_KEY, "");
 	}
 
 
 	public boolean uploadHeTong(HeTong hetong) throws Exception {
 		
 		if (isNetworkConnected()) {
-			if(User.type_dailishang.equals(preferences.getString("type", ""))){
+			if(User.type_dailishang.equals(getProperty(AppConfig.CONF_TYPT))){
 				
-				return RequestWebClient.getInstall().uploadHeTong(hetong);
+				return RequestWebClient.getInstall().uploadHeTong(hetong,getProperty(AppConfig.CONF_KEY),getProperty(AppConfig.CONF_NAME));
 			}else{
 				throw new RequestException("请用代理商帐号登录");
 			}
@@ -157,13 +157,6 @@ public class ChuangBaBaContext extends AppContext {
 		throw new RequestException("网络异常");
 	}
 
-	public boolean publishChuangYi(String string) throws Exception {
-
-		if (isNetworkConnected()) {
-			return RequestWebClient.getInstall().publishChuangYi(string);
-		}
-		throw new RequestException("网络异常");
-	}
 	/**
 	 * topBanner   tiantiantejia  tuijianshangpin
 	 * @return
@@ -176,7 +169,7 @@ public class ChuangBaBaContext extends AppContext {
 
 			String result = hg.getResult();
 
-			Log.d("httpget", result);
+			Log.i("dd", result);
 
 			JSONObject jsonobject = new JSONObject(result);
 
@@ -224,6 +217,7 @@ public class ChuangBaBaContext extends AppContext {
 			hp.addParemeter("userId", yuyue.getUserid());
 			hp.addParemeter("message", yuyue.getMessage());
 			hp.addParemeter("orderId", yuyue.getOrderId());
+			hp.addParemeter("name", yuyue.getName());
 
 			String result = hp.getResult();
 			JSONObject jsonobject = new JSONObject(result);
@@ -242,17 +236,17 @@ public class ChuangBaBaContext extends AppContext {
 	public BaseList getYuYueList(Base base,int pageIndex, boolean isRefresh)
 			throws Exception {
 
-		if (!User.type_dailishang.equals(preferences.getString("type", ""))) {
+		if (!User.type_dailishang.equals(getProperty(AppConfig.CONF_TYPT))) {
 			throw new RequestException("请先登录");
 		}
 		BaseList list = null;
-		String key = "yuyue_" + preferences.getString("type", "") + "_"
+		String key = "yuyue_" + getProperty(AppConfig.CONF_TYPT) + "_"
 				+ pageIndex + "_" + PAGE_SIZE;
 		if (isNetworkConnected() && (!isReadDataCache(key) || isRefresh)) {
 			try {
 				list = RequestWebClient.getInstall().getYuYueList(base,
-						preferences.getString("name", ""), pageIndex,
-						isRefresh, preferences.getString("key", ""));
+						getProperty(AppConfig.CONF_NAME), pageIndex,
+						isRefresh, getProperty(AppConfig.CONF_KEY));
 				if (list != null && pageIndex == 0) {
 					saveObject(list, key);
 				}
@@ -475,12 +469,12 @@ public class ChuangBaBaContext extends AppContext {
 	 * @return
 	 * @throws Exception
 	 */
-	public BaseList getHaveCacheBaseList(Base base, Map<String, Object> map,
+	public BaseList getHaveCacheBaseList(Activity activity,Base base, Map<String, Object> map,
 			boolean isRefresh) throws Exception {
 
 		BaseList list = null;
-		String key = 	preferences.getString("type", "") + "_"
-							+ preferences.getString("name", "") + "_"
+		String key = 	getProperty(AppConfig.CONF_TYPT) + "_"
+							+ getProperty(AppConfig.CONF_NAME) + "_"
 							+ base.getClass().getSimpleName() + "_" 
 							+ map.get("cachekey")
 							+ "_" + map.get(key_page) + "_" 
@@ -488,7 +482,7 @@ public class ChuangBaBaContext extends AppContext {
 		Log.w("key", key);
 		if (isNetworkConnected() && (!isReadDataCache(key) || isRefresh)) {
 			try {
-				list = Request(map, base);
+				list = Request(activity,map, base);
 				if (list != null) {
 					saveObject(list, key);
 				}
@@ -512,22 +506,25 @@ public class ChuangBaBaContext extends AppContext {
 	 * @return
 	 * @throws Exception
 	 */
-	public BaseList Request(Map<String, Object>  map,Base base) throws Exception{
+	public BaseList Request(Activity activity, Map<String, Object>  map,Base base) throws Exception{
 		Log.w("map", map.toString());
 		if (isNetworkConnected()) {
 			if (map.containsKey("user_Type")) {
-				if (preferences.getString("type", "").equals(map.get("user_Type"))) {
+				if ((map.get("user_Type")+"").equals(getProperty(AppConfig.CONF_TYPT))) {
 					map.remove("user_Type");
-					return RequestWebClient.getInstall().Request(map,base);
+					return RequestWebClient.getInstall().Request(map,base,getProperty(AppConfig.CONF_KEY),getProperty(AppConfig.CONF_NAME));
 				} else {
-					String str = "请用代理商帐号登录";
-					if (User.type_huiyuan.equals(map.get("user_Type"))) {
-						str = "请用会员帐号登录";
+					String str = "请先登录代理商帐号";
+					if ((map.get("user_Type")+"").equals(User.type_huiyuan)) {
+						str = "请先登录会员帐号";
+						activity.startActivityForResult(new Intent(this,HuiYuanLogin.class),11);
+					}else{
+						activity.startActivityForResult(new Intent(this,DaiLiShang.class),11);
 					}
 					throw new RequestException(str);
 				}
 			} else {
-				return RequestWebClient.getInstall().Request(map,base);
+				return RequestWebClient.getInstall().Request(map,base,getProperty(AppConfig.CONF_KEY),getProperty(AppConfig.CONF_NAME));
 			}
 		}
 		throw new RequestException("网络异常");

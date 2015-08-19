@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wlj.chuangbaba"
     android:versionCode="2"
-    android:versionName="2.0" >
+    android:versionName="2.6" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -44,8 +44,10 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.ACCES_MOCK_LOCATION" />
 
-<!--允许应用读取低级别的系统日志文件 -->
-<uses-permission android:name="android.permission.READ_LOGS"></uses-permission>
+	<!--允许应用读取低级别的系统日志文件 -->
+	<uses-permission android:name="android.permission.READ_LOGS"></uses-permission>
+	<!--在服务中显示对话框 -->
+	<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     
     <application
         android:name="com.wlj.chuangbaba.ChuangBaBaContext"
@@ -127,6 +129,10 @@
             android:name="com.wlj.chuangbaba.activity.personal.Personal_Center"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.wlj.chuangbaba.activity.personal.ChangeJiBenXinXi"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="com.wlj.chuangbaba.activity.personal.OrderActivity"
             android:screenOrientation="portrait" >
         </activity>
@@ -195,6 +201,10 @@
             android:name="com.wlj.chuangbaba.activity.lvcailingshou.LvCaiLingShou"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.wlj.chuangbaba.activity.lvcailingshou.LvCaiLingShouErJi"
+            android:screenOrientation="portrait" >
+        </activity>
 
         <!-- alipay sdk begin -->
         <activity
@@ -224,13 +234,14 @@
             android:screenOrientation="portrait">
         </activity>
         
-        
-        
           <service
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" >
         </service>
+        <service android:name="com.wlj.chuangbaba.services.CheckUpdate"
+            ></service>
+        
     </application>
 
 </manifest>

@@ -76,7 +76,7 @@ public class mytiwen extends BaseRefreshFragment  {
 		map.put(key_page, pageIndex2+"");
 		map.put("url", URLs.tiwenList);
 		map.put("my", "true");
-		return ((ChuangBaBaContext)mContext).getHaveCacheBaseList( new Wen(),map,isRefresh);
+		return ((ChuangBaBaContext)mContext).getHaveCacheBaseList(getActivity(),new Wen(),map,isRefresh);
 	}
 
 }

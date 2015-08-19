@@ -32,7 +32,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 android:ellipsize="marquee"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
@@ -91,7 +91,7 @@
                 android:layout_alignTop="@+id/textView5"
                 android:layout_toLeftOf="@+id/comehere"
                 android:layout_toRightOf="@+id/textView5"
-                android:text="TextViewTextViewTextViewTextViewTextViewTextViewTextView"
+                android:text="TextViewTextViewTextVi"
                 android:textColor="#636363" />
 
             <TextView
@@ -103,20 +103,6 @@
                 android:layout_marginTop="20dp"
                 android:text="你的手机号码："
                 android:textColor="#636363" />
-
-            <EditText
-                android:id="@+id/dialog_btuijian"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/textView8"
-                android:layout_alignLeft="@+id/dialog_tuijian"
-                android:layout_alignTop="@+id/textView8"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/txtborder"
-                android:hint="必填"
-                android:inputType="phone"
-                android:padding="5dp"
-                android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/dialog_submit"
@@ -139,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/textView5"
                 android:layout_below="@+id/dialog_pic"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="15dp"
                 android:text="　推荐人号码："
                 android:textColor="#636363" />
 
@@ -152,7 +138,6 @@
                 android:layout_marginRight="10dp"
                 android:layout_toRightOf="@+id/textView7"
                 android:background="@drawable/txtborder"
-                android:ems="10"
                 android:hint="此项可为空"
                 android:inputType="phone"
                 android:padding="5dp"
@@ -164,11 +149,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignRight="@+id/textView8"
-                android:layout_below="@+id/dialog_btuijian"
-                android:layout_marginTop="5dp"
+                android:layout_below="@+id/dialog_name"
+                android:layout_marginTop="15dp"
                 android:text="预约订单编号："
-                android:visibility="gone"
                 android:textColor="#636363" />
+            <!-- android:visibility="gone" -->
 
             <TextView
                 android:id="@+id/dialog_order"
@@ -176,9 +161,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/order"
                 android:layout_toRightOf="@+id/order"
-                android:textColor="#636363"
-                android:visibility="gone"
-                android:text="" />
+                android:text=""
+                android:textColor="#636363" />
+            <!-- android:visibility="gone" -->
 
             <TextView
                 android:id="@+id/comehere"
@@ -186,10 +171,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/textView5"
                 android:layout_alignParentRight="true"
-                android:textColor="@color/white"
                 android:layout_marginLeft="6dp"
                 android:background="@drawable/che"
-                android:text="" />
+                android:text=""
+                android:textColor="@color/white" />
 
             <ImageView
                 android:id="@+id/dialog_pic"
@@ -198,11 +183,52 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/dialog_address"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 android:adjustViewBounds="true"
                 android:src="@drawable/dailishangguanli" />
-<!--                 android:scaleType="fitXY" -->
+            <!-- android:scaleType="fitXY" -->
 
+            <TextView
+                android:id="@+id/TextView01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/textView8"
+                android:layout_below="@+id/dialog_btuijian"
+                android:layout_marginTop="20dp"
+                android:text="你的姓名："
+                android:textColor="#636363" />
+
+            <EditText
+                android:id="@+id/dialog_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/TextView01"
+                android:layout_alignBottom="@+id/TextView01"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/TextView01"
+                android:background="@drawable/txtborder"
+                android:ems="10"
+                android:hint="必填"
+                android:padding="5dp"
+                android:textColor="@color/black" >
+            </EditText>
+
+            <EditText
+                android:id="@+id/dialog_btuijian"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/textView8"
+                android:layout_alignBottom="@+id/textView8"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/textView8"
+                android:background="@drawable/txtborder"
+                android:hint="必填"
+                android:inputType="phone"
+                android:padding="5dp"
+                android:textColor="@color/black" >
+
+                <requestFocus />
+            </EditText>
         </RelativeLayout>
     </ScrollView>
 

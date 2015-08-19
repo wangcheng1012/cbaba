@@ -43,6 +43,7 @@ import com.wlj.chuangbaba.bean.User;
 import com.wlj.util.ExecutorServices;
 import com.wlj.util.Log;
 import com.wlj.util.MathUtil;
+import com.wlj.util.UIHelper;
 import com.wlj.web.URLs;
 
 public class PayDemoActivity extends MyBaseFragmentActivity {
@@ -120,6 +121,11 @@ public class PayDemoActivity extends MyBaseFragmentActivity {
 	 * 
 	 */
 	public void pay(View v) {
+		if(MathUtil.parseDouble(shifuprice) <= 0 ){
+			UIHelper.ToastMessage(mContext, "支付金额不能小于等于0");
+			return;
+		}
+		
 		// 订单
 		String orderInfo = getOrderInfo(order.getTitle(),order.getChanpinxinghao(), shifuprice);
 
@@ -421,7 +427,7 @@ public class PayDemoActivity extends MyBaseFragmentActivity {
 		map.put("user_Type",User.type_huiyuan);
 		map.put("url", URLs.list_daijinquan);
 		
-		BaseList list = (BaseList) ((ChuangBaBaContext) getApplicationContext()).Request(map, new DaiJinQuan());
+		BaseList list = (BaseList) ((ChuangBaBaContext) getApplicationContext()).Request(this,map, new DaiJinQuan());
 		return list;
 	}
 
@@ -443,7 +449,7 @@ public class PayDemoActivity extends MyBaseFragmentActivity {
 				 Message message = Message.obtain();
 				try {
 					message.what = 2;
-					message.obj = mContext.Request(map, null);
+					message.obj = mContext.Request(PayDemoActivity.this,map, null);
 				} catch (Exception e) {
 					message.what = -1;
 					message.obj = e;

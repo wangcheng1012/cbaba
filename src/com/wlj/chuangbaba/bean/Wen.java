@@ -133,9 +133,7 @@ public class Wen extends Base {
 		Wen wen = new Wen();
 		wen.setId(jsonObject.optString("id"));
 		String phonestr = jsonObject.optString(phone);
-		if("".equals(phonestr)){
-			phonestr =  ChuangBaBaContext.preferences.getString("name", "");
-		}
+		
 		wen.setPhone(phonestr);
 		wen.setWenti(jsonObject.getString("wen"));
 		wen.setState(jsonObject.getInt("state"));

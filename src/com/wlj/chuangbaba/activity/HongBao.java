@@ -1,6 +1,7 @@
 package com.wlj.chuangbaba.activity;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import android.content.Intent;
@@ -11,6 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.wlj.bean.Base;
+import com.wlj.bean.BaseList;
+import com.wlj.bean.Result;
 import com.wlj.chuangbaba.ChuangBaBaContext;
 import com.wlj.chuangbaba.MyBaseFragmentActivity;
 import com.wlj.chuangbaba.R;
@@ -19,8 +23,10 @@ import com.wlj.chuangbaba.activity.personal.HuiYuanLogin;
 import com.wlj.chuangbaba.activity.personal.Personal_Center;
 import com.wlj.chuangbaba.bean.DaiJinQuan;
 import com.wlj.chuangbaba.bean.User;
+import com.wlj.util.AppConfig;
 import com.wlj.util.ExecutorServices;
 import com.wlj.util.UIHelper;
+import com.wlj.web.URLs;
 
 public class HongBao extends MyBaseFragmentActivity implements OnClickListener {
 
@@ -47,7 +53,16 @@ public class HongBao extends MyBaseFragmentActivity implements OnClickListener {
 		getrand = (TextView)findViewById(R.id.getrand);
 		phone = (EditText)findViewById(R.id.phone);
 		rand = (EditText)findViewById(R.id.rand);
-		
+		if(User.type_huiyuan.equals(mContext.getProperty(AppConfig.CONF_TYPT)) ){
+			phone.setText(mContext.getProperty(AppConfig.CONF_NAME));
+		}else{
+			phone.setText("请先登录会员帐号");
+			
+			Intent intent2 = new Intent(mContext, HuiYuanLogin.class);
+			intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivityForResult(intent2, 11);
+		}
+		phone.setEnabled(false);
 		
 		lijichoujiang.setOnClickListener(this);
 		getrand.setOnClickListener(this);
@@ -66,6 +81,20 @@ public class HongBao extends MyBaseFragmentActivity implements OnClickListener {
 				getrand.setText(msg.arg1+"");
 			}
 			
+			break;
+		case 4:
+			BaseList baselist = (BaseList)msg.obj;
+			List<Base> list = baselist.getBaselist();
+			
+			UIHelper.ToastMessage(this, ((Result)list.get(0)).getErrorMessage());
+			UIHelper.loadingClose();
+			
+			Intent ntent = new Intent(getApplicationContext(), HongBao_My.class);
+			ntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(ntent);
+			break;
+		case 5:
+//			UIHelper.ToastMessage(this,"你已经领取过、或领取失败");
 			break;
 		}
 	}
@@ -98,14 +127,7 @@ public class HongBao extends MyBaseFragmentActivity implements OnClickListener {
 
 	@Override
 	protected void rightOnClick() {
-		Class<?> clas = null;
-		if (!User.type_huiyuan.equals(ChuangBaBaContext.preferences.getString("type", ""))) {
-			// 登录
-			clas = HuiYuanLogin.class;
-		} else {
-			clas = Personal_Center.class;
-		}
-		Intent right = new Intent(getApplicationContext(),clas);
+		Intent right = new Intent(getApplicationContext(),Personal_Center.class);
 		right.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(right);
 	}
@@ -127,39 +149,42 @@ public class HongBao extends MyBaseFragmentActivity implements OnClickListener {
 		switch (v.getId()) {
 		
 		case R.id.lijichoujiang:
-			
-			String name = phone.getText().toString().trim();
-			String password = rand.getText().toString().trim();
-
-			if ("".equals(name)) {
-				UIHelper.ToastMessage(mContext, "电话号码为空");
-				return;
-			}
-
-			if ("".equals(password)) {
-				UIHelper.ToastMessage(mContext, "验证码为空");
-				return;
-			}
-			
-			Message message = Message.obtain();
-			try {
-				Map<String, String>  map= new HashMap<String, String>();
-				map.put("name", name);
-				map.put("password", password);
+			UIHelper.loading("正在提交……", this);
+			ExecutorServices.getExecutorService().execute(new Runnable() {
 				
-//				DaiJinQuan daijinquan = mContext.getDaiJinQuan(base, pageindex);
-				message.what = 4;
-				message.obj =  null;
-				
-			} catch (Exception e1) {
-				message.what = -1;
-				message.obj = e1;
-			}
-			handle.sendMessage(message);
+				@Override
+				public void run() {
+					String name = phone.getText().toString().trim();
+					String password = rand.getText().toString().trim();
+
+					if ("".equals(name)) {
+						UIHelper.ToastMessage(mContext, "电话号码为空");
+						return;
+					}
+
+					if ("".equals(password)) {
+						UIHelper.ToastMessage(mContext, "验证码为空");
+						return;
+					}
+					
+					Message message = Message.obtain();
+					try {
+						Map<String, Object>  map= new HashMap<String, Object>();
+						map.put("url", URLs.choujiang);
+						map.put("user_Type",  User.type_huiyuan);
+						
+						message.what = 4;
+						message.obj =  mContext.Request(HongBao.this, map, new Result());
+						
+					} catch (Exception e1) {
+						message.what = -1;
+						message.obj = e1;
+					}
+					handle.sendMessage(message);
+					
+				}
+			});
 			
-			Intent ntent = new Intent(getApplicationContext(), HongBao_My.class);
-			ntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(ntent);
 			
 			break;
 		case R.id.getrand:
@@ -170,7 +195,7 @@ public class HongBao extends MyBaseFragmentActivity implements OnClickListener {
 				return;
 			}
 			if(name2.length() != 11){
-				UIHelper.ToastMessage(mContext, "请输入11位手机号码");
+				UIHelper.ToastMessage(mContext, "手机号码错误");
 				return;
 			}
 			getrand.setText("发送中……");
@@ -200,4 +225,14 @@ public class HongBao extends MyBaseFragmentActivity implements OnClickListener {
 		}
 	}
 
+	@Override
+	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+		super.onActivityResult(arg0, arg1, arg2);
+		if(arg1 == 55){
+			phone.setText(mContext.getProperty(AppConfig.CONF_NAME));
+		}else if(arg1 ==22){
+			finish();
+		}
+		
+	}
 }

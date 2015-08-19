@@ -46,7 +46,8 @@ public class _6_YuYueXinXi extends BaseRefreshFragment {
 				viewHolder.setText(R.id.yuyuePhone, item.getYuyuePhone());
 				viewHolder.setText(R.id.yuyueTime, item.getYuyueTime());
 				viewHolder.setText(R.id.yuyueOrder, item.getOrderId());
-				viewHolder.setText(R.id.yuyuePosition, item.getYuyuePosition());
+				viewHolder.setText(R.id.yuyuePosition,item.getMessage());
+				viewHolder.setText(R.id.yuyuename,item.getName());
 
 				return null;
 			}
@@ -75,7 +76,6 @@ public class _6_YuYueXinXi extends BaseRefreshFragment {
 	@Override
 	protected BaseList webMethod(Context mContext, Bundle bundle,
 			int pageIndex2, boolean isRefresh) throws Exception {
-		// TODO Auto-generated method stub
 		return ((ChuangBaBaContext) mContext).getYuYueList(new YuYue(),
 				pageIndex, isRefresh);
 	}

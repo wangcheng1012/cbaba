@@ -113,6 +113,7 @@ public class DaiJinQuan extends Base {
 	public void setBianma(String bianma) {
 		this.bianma = bianma;
 	}
+	//[{"id":"55bc8a47d6c4597b75dc59e0","bianma":"4384195271746916","moneyFen":"10000","startTime":"","endTime":"","description":"注册即送","time":"1438419527000"}
 	@Override
 	public Base parse(JSONObject tmp) throws JSONException {
 		DaiJinQuan heTong = new DaiJinQuan();

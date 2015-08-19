@@ -24,6 +24,7 @@ import com.wlj.chuangbaba.bean.Project;
 import com.wlj.chuangbaba.bean.User;
 import com.wlj.chuangbaba.bean.Wen;
 import com.wlj.chuangbaba.bean.DaiJinQuan;
+import com.wlj.util.AppConfig;
 import com.wlj.util.AppContext;
 import com.wlj.util.AppException;
 import com.wlj.util.Log;
@@ -113,19 +114,6 @@ public class RequestWebClient {
 			throw new RequestException(jSONObject.getString("description"));
 		}
 		throw new RequestException("获取数据失败");
-	}
-
-	/**
-	 * 发布创意
-	 * 
-	 * @param string
-	 * @param chuangBaBaContext
-	 * @return
-	 * @throws Exception
-	 */
-	public boolean publishChuangYi(String string) throws Exception {
-
-		return false;
 	}
 
 	public BaseList getProductListByFenleiId(Map<String, String> paremeter)
@@ -370,7 +358,7 @@ public class RequestWebClient {
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean uploadHeTong(HeTong hetong) throws Exception {
+	public boolean uploadHeTong(HeTong hetong,String key,String name) throws Exception {
 
 		JSONObject json = new JSONObject();
 		json.put("hetongbianhao", hetong.getBianhao());
@@ -378,9 +366,6 @@ public class RequestWebClient {
 		json.put("memo", hetong.getBeizhu());
 		json.put("pic", hetong.getPic());
 		json.put("id", hetong.getOrderNo());
-
-		String key = ChuangBaBaContext.preferences.getString("key", "");
-		String name = ChuangBaBaContext.preferences.getString("name", "");
 
 		String request_data = BaseWebMain.request_data( URLs.uploadHetong, key, name, json.toString());
 		if (request_data == null) {
@@ -458,7 +443,7 @@ public class RequestWebClient {
 		return false;
 	}
 	
-	private JSONObject request(Map<String, Object> map) throws Exception {
+	private JSONObject request(Map<String, Object> map,String key,String name) throws Exception {
 		String request_data = null;
 		
 		if (map == null)
@@ -477,6 +462,15 @@ public class RequestWebClient {
 			for (String string : set) {
 				hp.addParemeter(string, map.get(string)+"");
 			}
+			
+			if (map.get(key_page) != null) {
+				hp.addParemeter(key_page, map.get(key_page)+"");
+
+				if (map.get(key_pageSize) == null) {
+					hp.addParemeter(key_pageSize, pageSize + "");
+				}
+			}
+			
 			request_data = hp.getResult();
 
 		} else {
@@ -493,13 +487,8 @@ public class RequestWebClient {
 
 				if (map.get(key_pageSize) == null) {
 					json.put(key_pageSize, pageSize + "");
-				} else {
-					json.put(key_pageSize, map.get(key_pageSize) + "");
 				}
 			}
-
-			String key = ChuangBaBaContext.preferences.getString("key", "");
-			String name = ChuangBaBaContext.preferences.getString("name", "");
 
 			request_data = BaseWebMain.request_data(url + "", key, name,
 					json.toString());
@@ -508,8 +497,7 @@ public class RequestWebClient {
 		if (request_data == null) {
 			throw new RequestException("数据异常");
 		}
-		Log.w(url.toString().substring(url.toString().lastIndexOf("/")),
-				request_data);
+		Log.w(url.toString().substring(url.toString().lastIndexOf("/")),request_data);
 
 		return new JSONObject(request_data);
 	}
@@ -517,19 +505,20 @@ public class RequestWebClient {
 	/**
 	 * 自己定义返回
 	 * 
-	 * @param base 唯null 则反悔null
+	 * @param base 为null 则反回null
 	 * @param map
 	 * @throws Exception
 	 */
-	public BaseList Request(Map<String, Object> map, Base base)throws Exception {
+	public BaseList Request(Map<String, Object> map, Base base,String key,String name)throws Exception {
 
-		JSONObject jsonObject = request(map);
+		JSONObject jsonObject = request(map,key,name);
 
-		String state = jsonObject.getString("state");
+		String state = jsonObject.optString("state");
 
 		if (MsgContext.request_success.equals(state)) {
-			if (base == null)
+			if (base == null){
 				return null;
+			}
 
 			BaseList projectList = new BaseList();
 			long millis = System.currentTimeMillis();

@@ -70,12 +70,16 @@ public class HuiYuanLogin extends BaseFragmentActivity implements OnClickListene
 				Boolean b = (Boolean)msg.obj;
 			
 				if (b) {
-					Intent login = new Intent(getApplicationContext(),Personal_Center.class);
-					login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					startActivity(login);
-					finish();
+					
+					
+//					Intent login = new Intent(getApplicationContext(),Personal_Center.class);
+//					login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//					startActivity(login);
+//					finish();
 					
 					UIHelper.ToastMessage(mContext, "登录成功");
+					setResult(55);
+					finish();
 				} 
 				break;
 			case -1:
@@ -145,7 +149,12 @@ public class HuiYuanLogin extends BaseFragmentActivity implements OnClickListene
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.left:
+			
+			Intent intent = getIntent();
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			setResult(22, intent);
 			finish();
+			
 			break;
 		case R.id.login:
 			String name = phone.getText().toString().trim();
@@ -223,4 +232,14 @@ public class HuiYuanLogin extends BaseFragmentActivity implements OnClickListene
 		});
 
 	}
+	@Override
+	public void onBackPressed() {
+//		super.onBackPressed();
+		Intent intent = getIntent();
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		setResult(22, intent);
+		finish();
+	}
+	
+	
 }

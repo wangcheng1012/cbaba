@@ -84,24 +84,26 @@ public class AreaSelect implements OnItemSelectedListener, OnTouchListener {
 	private String fristCityName;
 	private String fristDistrictName;
 	
+	public String addr;
+	
 	public AreaSelect (MyMap mContext, BDLocation location){
 		
 		this.mContext = mContext;
 		
 		initProviceCityDistrictView();
-		
+		addr = location.getAddrStr();
 		//只有使用网络定位的情况下，才能获取当前位置的反地理编码描述
-//		mCurrentProviceName = location.getProvince(); 
-//		mCurrentCityName  = location.getCity (); 
-//		mCurrentDistrictName  = location.getDistrict (); 
-//		
-//		fristProviceName = mCurrentProviceName;
-//		fristCityName = mCurrentCityName;
-//		fristDistrictName = mCurrentDistrictName;
+		mCurrentProviceName = location.getProvince(); 
+		mCurrentCityName  = location.getCity (); 
+		mCurrentDistrictName  = location.getDistrict (); 
 		
-		fristProviceName = location.getProvince();
-		fristCityName = location.getCity ();
-		fristDistrictName = location.getDistrict ();
+		fristProviceName = mCurrentProviceName;
+		fristCityName = mCurrentCityName;
+		fristDistrictName = mCurrentDistrictName;
+		
+//		fristProviceName = location.getProvince();
+//		fristCityName = location.getCity ();
+//		fristDistrictName = location.getDistrict ();
 		
 		
 //		firstone = true;
@@ -252,6 +254,7 @@ public class AreaSelect implements OnItemSelectedListener, OnTouchListener {
 			
 			mCurrentDistrictName = ((TextView) view).getText()+"";
 			if("其他".equals(mCurrentDistrictName)){
+				mContext.LocalSearch(mCurrentCityName);
 				break;
 			}
 			if(b_district){

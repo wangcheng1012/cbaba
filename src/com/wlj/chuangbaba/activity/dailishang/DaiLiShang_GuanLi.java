@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.LruCache;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,6 +26,7 @@ import com.wlj.chuangbaba.activity.personal.HuiYuanLogin;
 import com.wlj.chuangbaba.activity.personal.OrderActivity;
 import com.wlj.chuangbaba.bean.User;
 import com.wlj.ui.BaseFragmentActivity;
+import com.wlj.util.AppConfig;
 import com.wlj.util.AppManager;
 import com.wlj.util.ExecutorServices;
 import com.wlj.util.UIHelper;
@@ -35,10 +37,12 @@ public class DaiLiShang_GuanLi extends BaseFragmentActivity implements OnClickLi
 
 	private RelativeLayout dailishang_jibenxinxi, dailishang_hetongshangchuan,
 			dailishang_chuangyifabu, dailishang_huifuwenti,
-			dailishang_huifupinglu, dailishang_yuyuexinxi,
-			dailishang_hetongbianhao, dailishang_wotijiaodechuangyi,
-			dailishang_rongyudu, dailishang_wodezhangfu;
-	private TextView home, tuijian, set, about;
+//			dailishang_huifupinglu,
+			dailishang_yuyuexinxi,
+			dailishang_hetongbianhao, dailishang_wotijiaodechuangyi
+//			,dailishang_rongyudu, dailishang_wodezhangfu
+			;
+//	private TextView home, tuijian, set, about;
 	private ImageView dailishangPic;
 //	private User user;
 	private TextView hetongshu;
@@ -51,7 +55,7 @@ public class DaiLiShang_GuanLi extends BaseFragmentActivity implements OnClickLi
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.dailishang_guanli);
 		mContext = (ChuangBaBaContext) getApplicationContext();
-		if(!User.type_dailishang.equals(ChuangBaBaContext.preferences.getString("type", ""))){
+		if(!User.type_dailishang.equals(mContext.getProperty(AppConfig.CONF_TYPT))){
 			//登录
 			Intent intentwenda = new Intent(getApplicationContext(),DaiLiShang.class);
 			intentwenda.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -66,12 +70,12 @@ public class DaiLiShang_GuanLi extends BaseFragmentActivity implements OnClickLi
 		dailishang_hetongshangchuan = (RelativeLayout) findViewById(R.id.dailishang_hetongshangchuan);
 		dailishang_chuangyifabu = (RelativeLayout) findViewById(R.id.dailishang_chuangyifabu);
 		dailishang_huifuwenti = (RelativeLayout) findViewById(R.id.dailishang_huifuwenti);
-		dailishang_huifupinglu = (RelativeLayout) findViewById(R.id.dailishang_huifupinglu);
+//		dailishang_huifupinglu = (RelativeLayout) findViewById(R.id.dailishang_huifupinglu);
 		dailishang_yuyuexinxi = (RelativeLayout) findViewById(R.id.dailishang_yuyuexinxi);
 		dailishang_hetongbianhao = (RelativeLayout) findViewById(R.id.dailishang_hetongbianhao);
 		dailishang_wotijiaodechuangyi = (RelativeLayout) findViewById(R.id.dailishang_wotijiaodechuangyi);
-		dailishang_rongyudu = (RelativeLayout) findViewById(R.id.dailishang_rongyudu);
-		dailishang_wodezhangfu = (RelativeLayout) findViewById(R.id.dailishang_wodezhangfu);
+//		dailishang_rongyudu = (RelativeLayout) findViewById(R.id.dailishang_rongyudu);
+//		dailishang_wodezhangfu = (RelativeLayout) findViewById(R.id.dailishang_wodezhangfu);
 		//
 		((ImageView)findViewById(R.id.dailishang_changpic)).setOnClickListener(this);
 		dailishangPic = (ImageView)findViewById(R.id.dailishangPic);
@@ -83,15 +87,13 @@ public class DaiLiShang_GuanLi extends BaseFragmentActivity implements OnClickLi
 		dailishang_hetongshangchuan.setOnClickListener(this);
 		dailishang_chuangyifabu.setOnClickListener(this);
 		dailishang_huifuwenti.setOnClickListener(this);
-		dailishang_huifupinglu.setOnClickListener(this);
+//		dailishang_huifupinglu.setOnClickListener(this);
 		dailishang_yuyuexinxi.setOnClickListener(this);
 		dailishang_hetongbianhao.setOnClickListener(this);
 		dailishang_wotijiaodechuangyi.setOnClickListener(this);
-		dailishang_rongyudu.setOnClickListener(this);
-		dailishang_wodezhangfu.setOnClickListener(this);
+//		dailishang_rongyudu.setOnClickListener(this);
+//		dailishang_wodezhangfu.setOnClickListener(this);
 
-		init_bottom();
-		
 		initWeb();
 	}
 	
@@ -108,7 +110,7 @@ public class DaiLiShang_GuanLi extends BaseFragmentActivity implements OnClickLi
 					map.put("url",  URLs.getUserInfo);
 					map.put("user_Type",  User.type_dailishang);
 					
-					BaseList baseList = mContext.Request(map,new User());
+					BaseList baseList = mContext.Request(DaiLiShang_GuanLi.this,map,new User());
 					
 					message.what = 1;
 					message.obj = baseList;
@@ -135,18 +137,6 @@ public class DaiLiShang_GuanLi extends BaseFragmentActivity implements OnClickLi
 		money.setText(user.getMoney()+"元");
 		yuyuenum.setText(user.getYuyuenum()+"份");
 	}
-	private void init_bottom() {
-		home = (TextView) findViewById(R.id.home);
-		tuijian = (TextView) findViewById(R.id.tuijian);
-		set = (TextView) findViewById(R.id.set);
-		about = (TextView) findViewById(R.id.about);
-
-		home.setOnClickListener(this);
-		tuijian.setOnClickListener(this);
-		set.setOnClickListener(this);
-		about.setOnClickListener(this);
-	}
-
 	private void init_title() {
 
 		TextView title = (TextView) findViewById(R.id.title);
@@ -157,7 +147,7 @@ public class DaiLiShang_GuanLi extends BaseFragmentActivity implements OnClickLi
 		right.setTextSize(15);
 		right.setTextColor(getResources().getColor(R.color.white));
 		right.setGravity(Gravity.CENTER_VERTICAL);
-
+		
 		TextView left = (TextView) findViewById(R.id.left);
 
 		Drawable drawableback = getResources().getDrawable(
@@ -207,17 +197,16 @@ public class DaiLiShang_GuanLi extends BaseFragmentActivity implements OnClickLi
 			startActivity(chuangyifabu);
 			break;
 		case R.id.dailishang_huifuwenti:
-			Intent huifuwenti = new Intent(getApplicationContext(),
-					GuanLi_4_HuiFuWenTi.class);
+			Intent huifuwenti = new Intent(getApplicationContext(),GuanLi_4_HuiFuWenTi.class);
 			huifuwenti.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(huifuwenti);
 			break;
-		case R.id.dailishang_huifupinglu:
-			Intent huifupinglu = new Intent(getApplicationContext(),
-					GuanLi_5_HuiFuPingLu.class);
-			huifupinglu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(huifupinglu);
-			break;
+//		case R.id.dailishang_huifupinglu:
+//			Intent huifupinglu = new Intent(getApplicationContext(),
+//					GuanLi_5_HuiFuPingLu.class);
+//			huifupinglu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//			startActivity(huifupinglu);
+//			break;
 		case R.id.dailishang_yuyuexinxi:
 			Intent yuyuexinxi = new Intent(getApplicationContext(),
 					GuanLi_6_YuYueXinXi.class);
@@ -236,32 +225,16 @@ public class DaiLiShang_GuanLi extends BaseFragmentActivity implements OnClickLi
 			wotijiaodechuangyi.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(wotijiaodechuangyi);
 			break;
-		case R.id.dailishang_rongyudu:
-			Intent rongyudu = new Intent(getApplicationContext(),GuanLi_9_RongYuDu.class);
-			rongyudu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(rongyudu);
-			break;
-		case R.id.dailishang_wodezhangfu:
-			Intent wodezhangfu = new Intent(getApplicationContext(),GuanLi_91_MyZhangHu.class);
-			wodezhangfu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(wodezhangfu);
-			break;
-		//
-		case R.id.home:
-			Intent home = new Intent(getApplicationContext(),Main.class);
-			home.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(home);
-			break;
-		case R.id.tuijian:
-			
-			break;
-		case R.id.set:
-			
-			break;
-		case R.id.about:
-			
-			break;
-
+//		case R.id.dailishang_rongyudu:
+//			Intent rongyudu = new Intent(getApplicationContext(),GuanLi_9_RongYuDu.class);
+//			rongyudu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//			startActivity(rongyudu);
+//			break;
+//		case R.id.dailishang_wodezhangfu:
+//			Intent wodezhangfu = new Intent(getApplicationContext(),GuanLi_91_MyZhangHu.class);
+//			wodezhangfu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//			startActivity(wodezhangfu);
+//			break;
 		}
 	}
 	

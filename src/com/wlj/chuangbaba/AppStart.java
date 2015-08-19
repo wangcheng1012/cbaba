@@ -1,33 +1,36 @@
 package com.wlj.chuangbaba;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import org.json.JSONObject;
+
 import android.content.Intent;
-import android.graphics.Color;
+import android.content.pm.PackageInfo;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.wlj.chuangbaba.R;
-import com.wlj.chuangbaba.activity.Login;
 import com.wlj.chuangbaba.activity.Main;
+import com.wlj.chuangbaba.services.CheckUpdate;
+import com.wlj.chuangbaba.web.HttpPost;
 import com.wlj.ui.BaseFragmentActivity;
-import com.wlj.update.Update;
-import com.wlj.update.Update.NextStep;
-import com.wlj.update.Update.state;
+import com.wlj.util.AppConfig;
+import com.wlj.util.AppContext;
 import com.wlj.util.DpAndPx;
+import com.wlj.util.ExecutorServices;
 import com.wlj.util.GetResourceImage;
 import com.wlj.util.UIHelper;
+import com.wlj.web.URLs;
 import com.wlj.widget.MyScrollLayout;
 import com.wlj.widget.SwitchViewDemoActivity;
 
@@ -76,43 +79,9 @@ public class AppStart extends BaseFragmentActivity {
 		});
     	
 	}
-	boolean isnext = false;
-	//2.检查更新
-	private void CheckVersion(String path){
-		
-		new Update(this, path, new NextStep() {
-			
-			@Override
-			public void next(state what) {
-				System.out.println(what.name()+"  "+what.ordinal());
-				
-				if(what == state.no_update){
-					
-				}else if(what == state.service_timeout){
-					
-				}else if(what == state.download_failed){
-					
-				}else if(what == state.version_exception){
-					
-				}
-				
-				isnext = true;
-			}
-		}){}.check();
-		
-	}
 	
 	private void GoToMain() {
-		if(!isnext){
-			UIHelper.ToastMessage(getApplicationContext(), "正在检查更新");
-			 new Handler().postDelayed(new  Runnable() {
-				public void run() {
-					isnext = true;
-				}
-			},3000);
-			return;
-		}
-		Intent intent = new Intent(getApplicationContext(),Main.class);
+		Intent intent = new Intent(getApplicationContext(), Main.class);
 		startActivity(intent);
 		finish();
 	}
@@ -120,26 +89,68 @@ public class AppStart extends BaseFragmentActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		CheckVersion("http://www.chuangbb.com/update.xml");
-	}
-	@Override
-	protected void onResume() {
-		super.onResume();
 		
-		View view = new SwitchViewDemoActivity(getApplicationContext(),null) {
+		startService(new Intent(getApplicationContext(),CheckUpdate.class));
+		final ChuangBaBaContext context = (ChuangBaBaContext)getApplicationContext();
+		
+		if(context.containsProperty(AppConfig.CONF_FIRSTSTART)){
+			GoToMain();
+		}else{
+			View view = new SwitchViewDemoActivity(getApplicationContext(),null) {
+				
+				@Override
+				protected void addSwitchPage(MyScrollLayout mScrollLayout) {
+					addSwitchPage_(mScrollLayout);
+				}
+				@Override
+				protected void scrollPoint(RelativeLayout layout) {
+					setPointResId(R.drawable.point_selector);
+					super.scrollPoint(layout);
+				}
+			}.createview();
 			
-			@Override
-			protected void addSwitchPage(MyScrollLayout mScrollLayout) {
-				addSwitchPage_(mScrollLayout);
-			}
-			@Override
-			protected void scrollPoint(RelativeLayout layout) {
-				setPointResId(R.drawable.point_selector);
-				super.scrollPoint(layout);
-			}
-		}.createview();
+			setContentView(view);
+			
+			ExecutorServices.getExecutorService().execute(new Runnable() {
+				
+				@Override
+				public void run() {
+					
+					String urlString = "baba/installTongji.do";
+			        
+			        HttpPost hp;
+					try {
+						
+						hp = new HttpPost(new URL(URLs.HOST+urlString));
+				        //手机号码
+				        hp.addParemeter("phone", "");
+				        //手机型号
+				        hp.addParemeter("xinghao", "Android: "+android.os.Build.VERSION.RELEASE+"("+android.os.Build.MODEL+")" );
+				        //手机硬件编码
+				        hp.addParemeter("hardId",context.getDevicNO());
+				        
+				        String result = hp.getResult();
+				        
+				        JSONObject jsonObject = new JSONObject(result);
+				        int state = jsonObject.optInt("state");
+				        if(state == 2){
+							new Handler(getMainLooper()).postDelayed(new Runnable() {
+								public void run() {
+									context.setProperty(AppConfig.CONF_FIRSTSTART,System.currentTimeMillis()+"");
+								}
+							}, 100);
+				        }
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					
+				}
+			});
+			
+		}
 		
-		setContentView(view);
+		
+		
 	}
 	
 }

@@ -63,7 +63,8 @@ public class GuanLi_2_HeTongUpLoad extends PhotoGraphActivity implements
 			callweb();
 			break;
 		case R.id.Photograph:
-			camera();
+			mCropParams.isCrop = false;
+			cameraAndGallery();
 			break;
 		}
 

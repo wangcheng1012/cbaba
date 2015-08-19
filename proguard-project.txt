@@ -1,7 +1,7 @@
 #-ignorewarnings
 
 -libraryjars libs/armeabi/libapp_BaiduNaviApplib_v1_0_0.so
--libraryjars libs/armeabi/libBaiduMapSDK_v3_4_0_7.so
+-libraryjars libs/armeabi/libBaiduMapSDK_v3_5_0_5.so
 -libraryjars libs/armeabi/liblocnaviSDK.so
 -libraryjars libs/armeabi/liblocSDK5.so
 -libraryjars libs/armeabi/libejTTS.so
@@ -9,13 +9,13 @@
 -libraryjars libs/android_api_1.1_forsdk.jar
 -libraryjars libs/BaiduLBS_Android.jar
 -libraryjars libs/galaxy_mini.jar
+-libraryjars libs/alipaySDK-20150610.jar
 
 -keep class com.baidu.** {*;}
 -keep class vi.com.gdi.bgl.android.**{*;}
 -keep class com.sinovoice.** {*;}
 -dontwarn com.baidu.navisdk.comapi.tts.ttsplayer.**
 
--libraryjars libs/alipaySDK-20150610.jar
 
 -keep class com.alipay.android.app.IAlixPay{*;}
 -keep class com.alipay.android.app.IAlixPay$Stub{*;}
@@ -23,3 +23,7 @@
 -keep class com.alipay.android.app.IRemoteServiceCallback$Stub{*;}
 -keep class com.alipay.sdk.app.PayTask{ public *;}
 -keep class com.alipay.sdk.app.AuthTask{ public *;}
+-keep class com.alipay.mobile.framework.service.annotation.OperationType{ public *;}
+
+-dontwarn com.alipay.apmobilesecuritysdk.**
+-dontwarn com.alipay.tscenter.biz.rpc.**

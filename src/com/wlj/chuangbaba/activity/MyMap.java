@@ -146,7 +146,6 @@ public class MyMap extends BaseFragmentActivity implements
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		SDKInitializer.initialize(getApplicationContext());
 		
 		super.onCreate(savedInstanceState);
 		// 注册 SDK 广播监听者
@@ -233,6 +232,20 @@ public class MyMap extends BaseFragmentActivity implements
 		mBaiduMap.setOnMapClickListener(this);
 
 		mBaiduMap.setOnMapTouchListener(this);
+		
+		//
+		// 隐藏缩放控件
+		int childCount = mMapView.getChildCount();
+		View zoom = null;
+		for (int i = 0; i < childCount; i++) {
+			View child = mMapView.getChildAt(i);
+			if (child instanceof ZoomControls) {
+				zoom = child;
+				break;
+			}
+
+		}
+		zoom.setVisibility(View.GONE);
 	}
 
 	/**
@@ -253,19 +266,6 @@ public class MyMap extends BaseFragmentActivity implements
 		// option.setNeedDeviceDirect(true);//返回的定位结果包含手机机头的方向
 
 		mLocClient.setLocOption(option);
-		//
-		// 隐藏缩放控件
-		int childCount = mMapView.getChildCount();
-		View zoom = null;
-		for (int i = 0; i < childCount; i++) {
-			View child = mMapView.getChildAt(i);
-			if (child instanceof ZoomControls) {
-				zoom = child;
-				break;
-			}
-
-		}
-		zoom.setVisibility(View.GONE);
 	}
 
 	/**
@@ -306,8 +306,7 @@ public class MyMap extends BaseFragmentActivity implements
 		map_dialog = inf.inflate(R.layout.map_dialog, null);
 		map_dialog.setVisibility(View.GONE);
 		map_dialog.getBackground().setAlpha(150);
-		map_dialog.findViewById(R.id.dialog_close_button).setOnClickListener(
-				this);
+		map_dialog.findViewById(R.id.dialog_close_button).setOnClickListener(this);
 		map_dialog.findViewById(R.id.dialog_submit).setOnClickListener(this);
 
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
@@ -379,7 +378,7 @@ public class MyMap extends BaseFragmentActivity implements
 		NearbySearchInfo info = new NearbySearchInfo();
 		info.ak = "3EQkyVB7qqRGAehd7uTmDKUT";
 		info.geoTableId = 103236;
-		info.radius = 30000;
+		info.radius = 5000;
 		info.location = arg0.longitude + "," + arg0.latitude;
 		// info.location = "106.502177,29.572253";
 		CloudManager.getInstance().nearbySearch(info);
@@ -416,7 +415,7 @@ public class MyMap extends BaseFragmentActivity implements
 		// map view 销毁后不在处理新接收的位置
 		if (location == null || mMapView == null)
 			return;
-		if (location.getLocType() == BDLocation.TypeGpsLocation
+		if (location.getLocType() != BDLocation.TypeGpsLocation
 				|| location.getLocType() == BDLocation.TypeNetWorkLocation) {
 
 			MyLocationData locData = new MyLocationData.Builder()
@@ -490,7 +489,10 @@ public class MyMap extends BaseFragmentActivity implements
 		
 		return false;
 	}
-
+	
+	/**
+	 * 详情云检索返回
+	 */
 	@Override
 	public void onGetDetailSearchResult(DetailSearchResult result, int arg1) {
 		if (result != null) {
@@ -510,7 +512,6 @@ public class MyMap extends BaseFragmentActivity implements
 				loadImage.doTask();
 
 				map_dialog.setVisibility(View.VISIBLE);
-				
 				
 				
 			} else {
@@ -550,7 +551,7 @@ public class MyMap extends BaseFragmentActivity implements
 			mBaiduMap.animateMapStatus(u);
 		} else {
 			if("regionSearch".equals(CloudSearchType)){
-				UIHelper.ToastMessage(mContext, "3千米内未找到代理商");
+				UIHelper.ToastMessage(mContext, "5千米内未找到代理商");
 			}else if("LocalSearch".equals(CloudSearchType)){
 				UIHelper.ToastMessage(mContext, LocalSearchRegion+"未找到代理商");
 			}
@@ -707,11 +708,17 @@ public class MyMap extends BaseFragmentActivity implements
 	 */
 	private void submitYuYue() {
 
-		final EditText dialog_btuijian = (EditText) map_dialog
-				.findViewById(R.id.dialog_btuijian);
-		String btuijian = dialog_btuijian.getText() + "";
+		EditText dialog_btuijian = (EditText) map_dialog.findViewById(R.id.dialog_btuijian);
+		EditText dialog_name = (EditText) map_dialog.findViewById(R.id.dialog_name);
+		
+		final String name = dialog_name.getText() + "";
+		final String btuijian = dialog_btuijian.getText() + "";
 		if ("".equals(btuijian)) {
 			UIHelper.ToastMessage(mContext, "请填写自己的手机号");
+			return;
+		}
+		if ("".equals(name)) {
+			UIHelper.ToastMessage(mContext, "请填写姓名");
 			return;
 		}
 		UIHelper.loading("正在处理", this);
@@ -721,16 +728,16 @@ public class MyMap extends BaseFragmentActivity implements
 			@Override
 			public void run() {
 
-				EditText dialog_tuijian = (EditText) map_dialog
-						.findViewById(R.id.dialog_tuijian);
+				EditText dialog_tuijian = (EditText) map_dialog.findViewById(R.id.dialog_tuijian);
 				TextView dialog_title = (TextView) map_dialog
 						.findViewById(R.id.dialog_title);
 
 				YuYue yuyue = new YuYue();
 				yuyue.setTuijianrenPhone(dialog_tuijian.getText() + "");
-				yuyue.setYuyuePhone(dialog_btuijian.getText() + "");
+				yuyue.setYuyuePhone(btuijian);
 				yuyue.setYuyueTime(StringUtils.getTime(System.currentTimeMillis(), "yyyy/MM/dd"));
 				yuyue.setUserid(dialog_title.getTag() + "");
+				yuyue.setName(name);
 				if (order == null) {
 					yuyue.setOrderId((System.currentTimeMillis() + "")
 							.substring(1));
@@ -740,7 +747,11 @@ public class MyMap extends BaseFragmentActivity implements
 				yuyue.setSheng(areaSelect.mCurrentProviceName);
 				yuyue.setShi(areaSelect.mCurrentCityName);
 				yuyue.setQu(areaSelect.mCurrentDistrictName);
-				yuyue.setMessage("预约");
+				if(areaSelect.addr != null){
+					yuyue.setMessage(areaSelect.addr);
+				}else{
+					yuyue.setMessage(areaSelect.mCurrentProviceName+"_"+areaSelect.mCurrentCityName+"_"+areaSelect.mCurrentDistrictName);
+				}
 
 				Message msg = Message.obtain();
 				try {

@@ -46,12 +46,9 @@ public class WenDa_fawen extends PhotoGraphActivity implements OnClickListener {
 
 	@Override
 	protected void setViewDate(Object obj) {
-		if(obj== null){
-			UIHelper.ToastMessage(mContext, "提交成功");
+			
+		UIHelper.ToastMessage(mContext, "提交成功");
 			finish();
-		}else{
-			UIHelper.ToastMessage(mContext, "提交失败");
-		}
 	}
 	@Override
 	protected void initView() {
@@ -81,7 +78,7 @@ public class WenDa_fawen extends PhotoGraphActivity implements OnClickListener {
 		}
 		map.put("pics", jsonArray);
 		
-		return mContext.Request(map, null);
+		return mContext.Request(this,map, null);
 	}
 	@Override
 	protected void rightOnClick() {
@@ -105,9 +102,12 @@ public class WenDa_fawen extends PhotoGraphActivity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.paizhao:
-			camera();
+			cameraAndGallery();
 			break;
 		case R.id.tijiaobutton:
+			if("".equals(problemText.getText().toString().trim())){
+				UIHelper.ToastMessage(this, "问题不能为空");
+			}
 			callweb();
 			break;
 		}

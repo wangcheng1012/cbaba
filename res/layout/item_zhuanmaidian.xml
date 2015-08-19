@@ -14,16 +14,16 @@
         android:text="重庆信息学年"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:textSize="@dimen/text_size_13" />
+        android:textSize="10sp" />
 
     <TextView
         android:id="@+id/addr"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:layout_marginTop="5dp"
-        android:text="地址:重庆市国际村30号"
         android:textColor="@color/hei_515151"
-        android:textSize="@dimen/text_size_13" />
+        android:text="werwsefsfffffefsdfsfsdggdfgdfgdfgdgdgdggdgg"
+        android:textSize="8sp" />
 
     <TextView
         android:id="@+id/phone"
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:text="023-3435345345"
         android:textColor="@color/hei_515151"
-        android:textSize="@dimen/text_size_13" />
+        android:textSize="8sp" />
 
     <ImageView
         android:id="@+id/pic"

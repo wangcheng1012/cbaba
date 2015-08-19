@@ -23,6 +23,15 @@ public class YuYue extends Base {
 	private String sheng;
 	private String shi;
 	private String qu;
+	private String name;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public String getMessage() {
 		return message;
@@ -97,20 +106,22 @@ public class YuYue extends Base {
 	}
 
 	public CharSequence getYuyuePosition() {
-		return sheng+"-"+shi+"-"+qu;
+		return sheng + "-" + shi + "-" + qu;
 	}
 
 	@Override
 	public Base parse(JSONObject object) throws JSONException {
 		YuYue yuyue = new YuYue();
-		yuyue.setYuyuePhone(object.getString("yuyuePhone"));
-		yuyue.setYuyueTime(object.getString("yuyueTime"));
-		yuyue.setTuijianrenPhone(object.getString("tuijianrenPhone"));
-		yuyue.setSheng(object.getString("sheng"));
-		yuyue.setShi(object.getString("shi"));
-		yuyue.setQu(object.getString("qu"));
-		yuyue.setMessage(object.getString("message"));
-		yuyue.setOrderId(object.getString("orderId"));
+		yuyue.setYuyuePhone(object.optString("yuyuePhone"));
+		yuyue.setYuyueTime(object.optString("yuyueTime"));
+		yuyue.setTuijianrenPhone(object.optString("tuijianrenPhone"));
+		yuyue.setSheng(object.optString("sheng"));
+		yuyue.setShi(object.optString("shi"));
+		yuyue.setQu(object.optString("qu"));
+		yuyue.setMessage(object.optString("message"));
+		yuyue.setOrderId(object.optString("orderId"));
+		yuyue.setName(object.optString("name"));
+		
 		return yuyue;
 	}
 }

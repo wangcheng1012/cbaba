@@ -12,8 +12,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/dailishang_inc"
-        android:layout_marginBottom="@dimen/title_height" >
+        android:layout_below="@+id/dailishang_inc" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,8 +27,8 @@
                     android:id="@+id/dailishangPic"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scaleType="fitXY"
                     android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
                     android:src="@drawable/dailishangguanli" />
 
                 <ImageView
@@ -227,27 +226,27 @@
                     android:src="@drawable/right_jiantou" />
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/dailishang_huifupinglu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:background="@color/white"
-                android:padding="10dp" >
+<!--             <RelativeLayout -->
+<!--                 android:id="@+id/dailishang_huifupinglu" -->
+<!--                 android:layout_width="match_parent" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:layout_marginTop="2dp" -->
+<!--                 android:background="@color/white" -->
+<!--                 android:padding="10dp" > -->
 
-                <TextView
-                    style="@style/dailishangguanli_style"
-                    android:drawableLeft="@drawable/huifupinglun"
-                    android:text="回复我收到的评论" />
+<!--                 <TextView -->
+<!--                     style="@style/dailishangguanli_style" -->
+<!--                     android:drawableLeft="@drawable/huifupinglun" -->
+<!--                     android:text="回复我收到的评论" /> -->
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="25dp"
-                    android:src="@drawable/right_jiantou" />
-            </RelativeLayout>
+<!--                 <ImageView -->
+<!--                     android:layout_width="wrap_content" -->
+<!--                     android:layout_height="wrap_content" -->
+<!--                     android:layout_alignParentRight="true" -->
+<!--                     android:layout_centerVertical="true" -->
+<!--                     android:layout_marginRight="25dp" -->
+<!--                     android:src="@drawable/right_jiantou" /> -->
+<!--             </RelativeLayout> -->
 
             <RelativeLayout
                 android:id="@+id/dailishang_chayuexinxi"
@@ -330,68 +329,54 @@
                     android:src="@drawable/right_jiantou" />
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/dailishang_rongyudu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:background="@color/white"
-                android:padding="10dp" >
+<!--             <RelativeLayout -->
+<!--                 android:id="@+id/dailishang_rongyudu" -->
+<!--                 android:layout_width="match_parent" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:layout_marginTop="2dp" -->
+<!--                 android:background="@color/white" -->
+<!--                 android:padding="10dp" > -->
 
-                <TextView
-                    style="@style/dailishangguanli_style"
-                    android:drawableLeft="@drawable/woderongyu"
-                    android:text="我的信誉度" />
+<!--                 <TextView -->
+<!--                     style="@style/dailishangguanli_style" -->
+<!--                     android:drawableLeft="@drawable/woderongyu" -->
+<!--                     android:text="我的信誉度" /> -->
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="25dp"
-                    android:src="@drawable/right_jiantou" />
-            </RelativeLayout>
+<!--                 <ImageView -->
+<!--                     android:layout_width="wrap_content" -->
+<!--                     android:layout_height="wrap_content" -->
+<!--                     android:layout_alignParentRight="true" -->
+<!--                     android:layout_centerVertical="true" -->
+<!--                     android:layout_marginRight="25dp" -->
+<!--                     android:src="@drawable/right_jiantou" /> -->
+<!--             </RelativeLayout> -->
 
-            <RelativeLayout
-                android:id="@+id/dailishang_wodezhangfu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:background="@color/white"
-                android:padding="10dp" >
+<!--             <RelativeLayout -->
+<!--                 android:id="@+id/dailishang_wodezhangfu" -->
+<!--                 android:layout_width="match_parent" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:layout_marginTop="2dp" -->
+<!--                 android:background="@color/white" -->
+<!--                 android:padding="10dp" > -->
 
-                <TextView
-                    style="@style/dailishangguanli_style"
-                    android:drawableLeft="@drawable/wodezhanghu"
-                    android:text="我的账户" />
+<!--                 <TextView -->
+<!--                     style="@style/dailishangguanli_style" -->
+<!--                     android:drawableLeft="@drawable/wodezhanghu" -->
+<!--                     android:text="我的账户" /> -->
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="25dp"
-                    android:src="@drawable/right_jiantou" />
-            </RelativeLayout>
+<!--                 <ImageView -->
+<!--                     android:layout_width="wrap_content" -->
+<!--                     android:layout_height="wrap_content" -->
+<!--                     android:layout_alignParentRight="true" -->
+<!--                     android:layout_centerVertical="true" -->
+<!--                     android:layout_marginRight="25dp" -->
+<!--                     android:src="@drawable/right_jiantou" /> -->
+<!--             </RelativeLayout> -->
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="20dp" />
         </LinearLayout>
     </ScrollView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical" >
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="#E8E8E8" />
-
-        <include layout="@layout/bottom2" />
-    </LinearLayout>
 
 </RelativeLayout>

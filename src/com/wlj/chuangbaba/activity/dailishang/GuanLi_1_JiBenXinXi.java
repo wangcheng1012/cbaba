@@ -81,28 +81,8 @@ public class GuanLi_1_JiBenXinXi extends PhotoGraphActivity implements
 		switch (v.getId()) {
 		
 		case R.id.Photograph:
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			
-			final AlertDialog dialog = builder.create();
-			dialog.show();
-			Window window = dialog.getWindow();
-			
-			window.setContentView(getLayoutInflater().inflate(R.layout.piccomechoose,null));
-			window.findViewById(R.id.camera).setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					camera();
-					dialog.dismiss();
-				}
-			});
-			
-			window.findViewById(R.id.gallery).setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					gallery();
-					dialog.dismiss();
-				}
-			});
+			cameraAndGallery();
 			
 			break;
 		case R.id.submit:
@@ -171,7 +151,7 @@ public class GuanLi_1_JiBenXinXi extends PhotoGraphActivity implements
 //			map.put("pic","");
 		}
 		
-		return  mContext.Request(map, null);
+		return  mContext.Request(this,map, null);
 	}
 
 	@Override

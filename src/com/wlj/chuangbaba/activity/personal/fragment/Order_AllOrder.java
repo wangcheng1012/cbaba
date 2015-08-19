@@ -252,7 +252,7 @@ public class Order_AllOrder extends BaseRefreshFragment   {
 			map.put("url", URLs.salerorderList);
 		}
 		
-		return ((ChuangBaBaContext)mContext).getHaveCacheBaseList(new Order(), map, isRefresh);
+		return ((ChuangBaBaContext)mContext).getHaveCacheBaseList(getActivity(),new Order(), map, isRefresh);
 	}
 
 }

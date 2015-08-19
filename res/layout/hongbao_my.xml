@@ -24,7 +24,6 @@
             android:layout_height="match_parent"
             android:background="#E8E8E8" />
 
-      
         <TextView
             android:id="@+id/overdue"
             style="@style/bottomtext"
@@ -33,9 +32,9 @@
 
     <LinearLayout
         android:id="@+id/cusor_bak"
-        android:background="#fffcf8"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:background="#fffcf8" >
 
         <ImageView
             android:id="@+id/cursor"
@@ -44,5 +43,11 @@
             android:scaleType="matrix"
             android:src="@color/color_main_title" />
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/framelay_center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </FrameLayout>
 
 </LinearLayout>

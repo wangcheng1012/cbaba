@@ -12,15 +12,14 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
@@ -34,14 +33,13 @@ import android.widget.TextView;
 
 import com.wlj.adapter.CommonAdapter;
 import com.wlj.adapter.ViewHolder;
+import com.wlj.bean.Base;
+import com.wlj.bean.BaseList;
 import com.wlj.chuangbaba.ChuangBaBaContext;
 import com.wlj.chuangbaba.R;
 import com.wlj.chuangbaba.activity.projectxiangqing.FenLei_xiangqing;
 import com.wlj.chuangbaba.bean.Project;
-import com.wlj.bean.Base;
-import com.wlj.bean.BaseList;
 import com.wlj.chuangbaba.bean.ProjectTab;
-import com.wlj.ui.BaseFragmentActivity;
 import com.wlj.ui.BaseFragmentActivity;
 import com.wlj.util.AppException;
 import com.wlj.util.DpAndPx;
@@ -434,6 +432,7 @@ public class FenLei extends BaseFragmentActivity implements OnClickListener {
 			clickview.setPadding(px10, px15, px10, px15);
 			clickview.setTextColor(getResources().getColor(R.color.red_f27e17));
 			clickview.setLayoutParams(params);
+			clickview.setGravity(Gravity.CENTER_VERTICAL);
 
 			tagid = v.getTag().toString();
 

@@ -61,6 +61,19 @@ public class User extends Base {
 	 * 随机码
 	 */
 	private String rand;
+	/**
+	 * 等级
+	 */
+	private String dengji;
+	
+	
+	public String getDengji() {
+		return dengji;
+	}
+
+	public void setDengji(String dengji) {
+		this.dengji = dengji;
+	}
 
 	public String getRealname() {
 		return realname;
@@ -169,13 +182,15 @@ public class User extends Base {
 	@Override
 	public Base parse(JSONObject jsonObject) throws JSONException {
 		User user = new User();
-		user.setHetongshu(RequestWebClient.getJsonInt(jsonObject, "hetongcount"));
-		user.setMoney(RequestWebClient.getJsonString(jsonObject, "daozhang"));
-		user.setYuyuenum(RequestWebClient.getJsonInt(jsonObject, "yuyue"));
-		user.setPhone(RequestWebClient.getJsonString(jsonObject, "phone"));
-		user.setRealname(RequestWebClient.getJsonString(jsonObject, "realname"));
-		user.setCompanyAddr(RequestWebClient.getJsonString(jsonObject, "addr"));
+		user.setHetongshu(jsonObject.optInt("hetongcount"));
+		user.setMoney(jsonObject.optString("daozhang"));
+		user.setYuyuenum(jsonObject.optInt("yuyue"));
+		user.setPhone(jsonObject.optString("phone"));
+		user.setRealname(jsonObject.optString("realname"));
+		user.setCompanyAddr(jsonObject.optString("addr"));
 		user.setPic(jsonObject.optString("picname"));
+		user.setDengji(jsonObject.optString("dengji"));
+		
 		return user;
 	}
 

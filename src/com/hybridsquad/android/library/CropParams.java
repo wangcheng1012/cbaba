@@ -30,10 +30,13 @@ public class CropParams {
     public int aspectX;
     public int aspectY;
 
-    public int outputX;
-    public int outputY;
+    public static int outputX;
+    public static int outputY;
 
+    public boolean isCrop = true;
+    
     public CropParams() {
+    	
         uri = CropHelper.buildUri();
         type = CROP_TYPE;
         outputFormat = OUTPUT_FORMAT;

@@ -24,7 +24,6 @@ public class GuanLi_4_HuiFuWenTi extends MyBaseActivity implements OnClickListen
 		case R.id.right:
 			finish();
 			break;
-
 		}
 
 	}

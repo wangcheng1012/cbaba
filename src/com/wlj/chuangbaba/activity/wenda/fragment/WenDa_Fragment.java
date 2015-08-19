@@ -21,10 +21,12 @@ import com.wlj.chuangbaba.ChuangBaBaContext;
 import com.wlj.chuangbaba.R;
 import com.wlj.chuangbaba.activity.wenda.WenDa_xiangqing;
 import com.wlj.chuangbaba.bean.Answer;
+import com.wlj.chuangbaba.bean.User;
 import com.wlj.chuangbaba.bean.Wen;
 import com.wlj.ui.BaseRefreshFragment;
 import com.wlj.util.MathUtil;
 import com.wlj.util.StringUtils;
+import com.wlj.util.UIHelper;
 import com.wlj.web.URLs;
 
 public class WenDa_Fragment extends BaseRefreshFragment   {
@@ -69,7 +71,22 @@ public class WenDa_Fragment extends BaseRefreshFragment   {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put(key_page, pageIndex2+"");
 		map.put("url", URLs.tiwenList);
-		return ((ChuangBaBaContext)mContext).getHaveCacheBaseList( new Wen(),map,isRefresh);
+		map.put("user_Type", User.type_huiyuan);
+		return ((ChuangBaBaContext)mContext).getHaveCacheBaseList(getActivity(),new Wen(),map,isRefresh);
 	}
-
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		UIHelper.ToastMessage(mContext, "resultCode"+resultCode);
+		if( resultCode == 22){
+			// esultCode == 22 没登录
+			
+			getActivity().finish();
+		}else if(resultCode == 55){
+			
+			callWeb( 1, UIHelper.LISTVIEW_ACTION_REFRESH);
+		}
+		
+	}
 }

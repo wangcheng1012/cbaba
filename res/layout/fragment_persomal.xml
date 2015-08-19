@@ -92,25 +92,25 @@
                 android:text="支付完成"
                 android:textColor="@color/black"
                 android:textSize="12sp" />
-             <View
-                android:layout_width="1px"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/gray" />
-              <TextView
-                  android:id="@+id/orderQuery"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:singleLine="true"
-                android:text="订单查询"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
+<!--              <View -->
+<!--                 android:layout_width="1px" -->
+<!--                 android:layout_height="match_parent" -->
+<!--                 android:layout_gravity="center_vertical" -->
+<!--                 android:layout_marginBottom="10dp" -->
+<!--                 android:layout_marginTop="10dp" -->
+<!--                 android:background="@color/gray" /> -->
+<!--               <TextView -->
+<!--                   android:id="@+id/orderQuery" -->
+<!--                 android:layout_width="0dp" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:layout_weight="1" -->
+<!--                 android:gravity="center" -->
+<!--                 android:paddingBottom="10dp" -->
+<!--                 android:paddingTop="10dp" -->
+<!--                 android:singleLine="true" -->
+<!--                 android:text="订单查询" -->
+<!--                 android:textColor="@color/black" -->
+<!--                 android:textSize="12sp" /> -->
         </LinearLayout>
 
         <LinearLayout
