@@ -31,7 +31,7 @@ import com.wlj.util.AppManager;
 import com.wlj.util.ExecutorServices;
 import com.wlj.util.UIHelper;
 import com.wlj.util.img.LoadImage;
-import com.wlj.web.URLs;
+import com.wlj.chuangbaba.web.URLs;
 
 public class DaiLiShang_GuanLi extends BaseFragmentActivity implements OnClickListener {
 

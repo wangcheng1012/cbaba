@@ -27,7 +27,7 @@ import com.wlj.chuangbaba.bean.Project;
 import com.wlj.util.ListUtils;
 import com.wlj.util.UIHelper;
 import com.wlj.util.img.LoadImage;
-import com.wlj.web.URLs;
+import com.wlj.chuangbaba.web.URLs;
 import com.wlj.widget.AutoScrollViewPager;
 import com.wlj.widget.SwitchViewPagerDemoActivity;
 

@@ -18,6 +18,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -64,7 +65,7 @@ import com.wlj.util.Log;
 import com.wlj.util.UIHelper;
 import com.wlj.util.img.LoadImage;
 import com.wlj.util.img2.ImageLrucache;
-import com.wlj.web.URLs;
+import com.wlj.chuangbaba.web.URLs;
 import com.wlj.widget.AutoScrollViewPager;
 import com.wlj.widget.SwitchViewPagerDemoActivity;
 
@@ -239,9 +240,9 @@ public class Main extends BaseFragmentActivity implements OnClickListener,
 			List<String> arrayList = new ArrayList<String>();
 			for (Banner banner : list) {
 				String picurl = banner.getPicurl();
-				if (picurl.contains(URLs.HOST)) {
-					picurl = picurl.replace(URLs.HOST, "");
-				}
+//				if (picurl.contains(URLs.HOST)) {
+//					picurl = picurl.replace(URLs.HOST, "");
+//				}
 				arrayList.add(picurl);
 			}
 
@@ -494,7 +495,7 @@ public class Main extends BaseFragmentActivity implements OnClickListener,
 	}
 
 	private void callWeb() {
-
+		setProgressBarIndeterminateVisibility(true);
 		ExecutorServices.getExecutorService().execute(new Runnable() {
 			@Override
 			public void run() {
@@ -555,7 +556,7 @@ public class Main extends BaseFragmentActivity implements OnClickListener,
 //					ICMessage.obj = e;
 //				}
 //				handle.sendMessage(ICMessage);
-				
+				 setProgressBarIndeterminateVisibility(false);
 			}
 		});
 

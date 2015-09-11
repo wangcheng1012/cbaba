@@ -11,7 +11,8 @@ import android.widget.LinearLayout;
 import com.wlj.util.DpAndPx;
 
 /**
- * 
+ * <li>与MyBaseFragmentActivity比 多了个 移动cursor的方法</li>
+ * <li>注意 xml 里面的 cursor的id为cursor，与tab选项卡LinearLayout布局id为tab_linlayout，这个应该要想办法优化</li>
  * @author wlj
  */
 public abstract class MyBaseMoreFragmentActivity extends MyBaseFragmentActivity {

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,7 +27,7 @@ import com.wlj.chuangbaba.bean.User;
 import com.wlj.util.AppConfig;
 import com.wlj.util.ExecutorServices;
 import com.wlj.util.UIHelper;
-import com.wlj.web.URLs;
+import com.wlj.chuangbaba.web.URLs;
 
 public class HongBao extends MyBaseFragmentActivity implements OnClickListener {
 
@@ -42,12 +43,14 @@ public class HongBao extends MyBaseFragmentActivity implements OnClickListener {
 
 	@Override
 	protected int setlayout() {
+		requestWindowFeature(Window.FEATURE_PROGRESS);
 		return R.layout.hongbao;
 	}
 
 	@Override
 	protected void initView() {
-		
+		setProgressBarVisibility(true);
+		setProgress(1000);
 		lijichoujiang = (Button)findViewById(R.id.lijichoujiang);
 		choujiang = (Button)findViewById(R.id.choujiang);
 		getrand = (TextView)findViewById(R.id.getrand);

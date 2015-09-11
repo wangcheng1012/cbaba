@@ -14,7 +14,7 @@ import com.wlj.chuangbaba.MyBaseActivity;
 import com.wlj.chuangbaba.R;
 import com.wlj.chuangbaba.bean.User;
 import com.wlj.util.UIHelper;
-import com.wlj.web.URLs;
+import com.wlj.chuangbaba.web.URLs;
 
 /**
  * 代理商——管理——发布创意

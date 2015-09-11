@@ -21,7 +21,7 @@ import com.wlj.ui.BaseFragment;
 import com.wlj.util.ExecutorServices;
 import com.wlj.util.Log;
 import com.wlj.util.UIHelper;
-import com.wlj.web.URLs;
+import com.wlj.chuangbaba.web.URLs;
 
 public class lvcailingshou_Fragment extends BaseFragment   {
 

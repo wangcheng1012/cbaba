@@ -8,8 +8,9 @@ import android.view.View.OnClickListener;
 import com.wlj.bean.Base;
 
 /**
- * rightDrawable，lifeDrawable 要先设置再initTitle
- * 实现了title,changfragment , handle
+ * changfragment 
+ * <li>有Fragment切换的</li>
+ * 
  * @author wlj
  */
 public abstract class MyBaseFragmentActivity extends MyBaseActivity {

@@ -31,7 +31,6 @@ import com.wlj.util.Log;
 import com.wlj.util.MathUtil;
 import com.wlj.util.RequestException;
 import com.wlj.util.StringUtils;
-import com.wlj.web.URLs;
 
 /**
  * 

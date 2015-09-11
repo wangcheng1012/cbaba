@@ -51,7 +51,7 @@ import com.wlj.util.Log;
 import com.wlj.util.RequestException;
 import com.wlj.util.StringUtils;
 import com.wlj.util.UIHelper;
-import com.wlj.web.URLs;
+import com.wlj.chuangbaba.web.URLs;
 
 public class ChuangBaBaContext extends AppContext {
 	

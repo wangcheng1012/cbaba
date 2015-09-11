@@ -1,13 +1,10 @@
 package com.wlj.chuangbaba;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.json.JSONObject;
 
 import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,14 +20,12 @@ import android.widget.TextView;
 import com.wlj.chuangbaba.activity.Main;
 import com.wlj.chuangbaba.services.CheckUpdate;
 import com.wlj.chuangbaba.web.HttpPost;
+import com.wlj.chuangbaba.web.URLs;
 import com.wlj.ui.BaseFragmentActivity;
 import com.wlj.util.AppConfig;
-import com.wlj.util.AppContext;
 import com.wlj.util.DpAndPx;
 import com.wlj.util.ExecutorServices;
 import com.wlj.util.GetResourceImage;
-import com.wlj.util.UIHelper;
-import com.wlj.web.URLs;
 import com.wlj.widget.MyScrollLayout;
 import com.wlj.widget.SwitchViewDemoActivity;
 

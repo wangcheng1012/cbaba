@@ -30,7 +30,7 @@ import com.wlj.chuangbaba.bean.User;
 import com.wlj.util.AppConfig;
 import com.wlj.util.ExecutorServices;
 import com.wlj.util.img.LoadImage;
-import com.wlj.web.URLs;
+import com.wlj.chuangbaba.web.URLs;
 
 public class ZhuanMaiDian extends MyBaseFragmentActivity {
 

@@ -37,7 +37,7 @@ import com.wlj.util.MathUtil;
 import com.wlj.util.StringUtils;
 import com.wlj.util.UIHelper;
 import com.wlj.util.img.LoadImage;
-import com.wlj.web.URLs;
+import com.wlj.chuangbaba.web.URLs;
 
 
 public class Order_AllOrder extends BaseRefreshFragment   {

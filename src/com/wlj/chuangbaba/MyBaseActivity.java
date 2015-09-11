@@ -8,6 +8,7 @@ import android.os.Message;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.TextView;
 
 import com.wlj.ui.BaseFragmentActivity;
@@ -15,6 +16,8 @@ import com.wlj.util.ExecutorServices;
 import com.wlj.util.UIHelper;
 
 /**
+ * title、title两边，和一次网络访问
+ * 
  * @author wlj
  */
 public abstract class MyBaseActivity extends BaseFragmentActivity {
@@ -41,7 +44,6 @@ public abstract class MyBaseActivity extends BaseFragmentActivity {
 	protected abstract void beforeTitle();
 
 	private void initTitle() {
-		
 		title = (TextView) findViewById(R.id.title);
 		right = (TextView) findViewById(R.id.right);
 		left = (TextView) findViewById(R.id.left);

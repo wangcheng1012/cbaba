@@ -28,7 +28,7 @@ import com.wlj.ui.BaseRefreshFragment;
 import com.wlj.util.MathUtil;
 import com.wlj.util.StringUtils;
 import com.wlj.util.img.LoadImage;
-import com.wlj.web.URLs;
+import com.wlj.chuangbaba.web.URLs;
 
 public class mytiwen extends BaseRefreshFragment  {
 

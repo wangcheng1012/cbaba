@@ -26,7 +26,7 @@ import com.wlj.util.ExecutorServices;
 import com.wlj.util.MathUtil;
 import com.wlj.util.StringUtils;
 import com.wlj.util.UIHelper;
-import com.wlj.web.URLs;
+import com.wlj.chuangbaba.web.URLs;
 import com.wlj.widget.PullToRefreshListView;
 
 public class Project_GuiGe extends BaseFragment implements OnClickListener {

@@ -27,7 +27,7 @@ import com.wlj.ui.BaseRefreshFragment;
 import com.wlj.util.MathUtil;
 import com.wlj.util.StringUtils;
 import com.wlj.util.UIHelper;
-import com.wlj.web.URLs;
+import com.wlj.chuangbaba.web.URLs;
 
 public class WenDa_Fragment extends BaseRefreshFragment   {
 	

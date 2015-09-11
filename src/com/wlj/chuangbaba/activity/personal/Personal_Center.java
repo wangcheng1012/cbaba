@@ -23,7 +23,7 @@ import com.wlj.chuangbaba.activity.dailishang.DaiLiShang_GuanLi;
 import com.wlj.chuangbaba.bean.User;
 import com.wlj.ui.BaseFragmentActivity;
 import com.wlj.util.AppConfig;
-import com.wlj.web.URLs;
+import com.wlj.chuangbaba.web.URLs;
 
 /**
  * 会员个人中心

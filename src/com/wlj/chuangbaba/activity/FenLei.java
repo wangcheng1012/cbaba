@@ -47,7 +47,7 @@ import com.wlj.util.ExecutorServices;
 import com.wlj.util.MathUtil;
 import com.wlj.util.UIHelper;
 import com.wlj.util.img.LoadImage;
-import com.wlj.web.URLs;
+import com.wlj.chuangbaba.web.URLs;
 import com.wlj.widget.PullToRefreshListView;
 import com.wlj.widget.PullToRefreshListView.OnRefreshListener;
 

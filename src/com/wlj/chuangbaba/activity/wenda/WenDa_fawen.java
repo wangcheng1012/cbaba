@@ -22,7 +22,7 @@ import com.wlj.chuangbaba.bean.User;
 import com.wlj.chuangbaba.bean.Wen;
 import com.wlj.util.UIHelper;
 import com.wlj.util.img.BitmapUtil;
-import com.wlj.web.URLs;
+import com.wlj.chuangbaba.web.URLs;
 
 public class WenDa_fawen extends PhotoGraphActivity implements OnClickListener {
 

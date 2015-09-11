@@ -82,7 +82,7 @@ import com.wlj.util.StringUtils;
 import com.wlj.util.UIHelper;
 import com.wlj.util.img.ImageFileCache;
 import com.wlj.util.img.LoadImage;
-import com.wlj.web.URLs;
+import com.wlj.chuangbaba.web.URLs;
 
 /**
  * 门店查询（地图）
@@ -159,7 +159,6 @@ public class MyMap extends BaseFragmentActivity implements
 		 * 导航
 		 */
 		initDaoHang();
-		
 		setContentView(R.layout.mendian);
 		mContext = (ChuangBaBaContext) getApplicationContext();
 		initMap();

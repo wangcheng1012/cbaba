@@ -31,7 +31,7 @@ import com.wlj.chuangbaba.bean.User;
 import com.wlj.util.DpAndPx;
 import com.wlj.util.UIHelper;
 import com.wlj.util.img.BitmapUtil;
-import com.wlj.web.URLs;
+import com.wlj.chuangbaba.web.URLs;
 
 /**
  * 代理商——管理——基本信息
